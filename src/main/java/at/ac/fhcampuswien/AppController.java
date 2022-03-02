@@ -13,5 +13,8 @@ public class AppController {
     public int getArticleCount(){
         return 0 ;
     }
+    public List<Article> getTopHeadlinesAustria(){
+        return articles;
+    }
 
 }
