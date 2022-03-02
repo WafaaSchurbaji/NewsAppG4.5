@@ -16,5 +16,7 @@ public class AppController {
     public List<Article> getTopHeadlinesAustria(){
         return articles;
     }
-
+    public List<Article> getAllNewsBitcoin(){
+        return articles;
+    }
 }
