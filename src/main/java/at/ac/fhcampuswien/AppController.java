@@ -19,4 +19,10 @@ public class AppController {
     public List<Article> getAllNewsBitcoin(){
         return articles;
     }
+    protected static List<Article> filterList(String query,List<Article> articles){
+        return articles;
+    }
+    private List<Article> generateMockList(){
+        return articles;
+    }
 }
