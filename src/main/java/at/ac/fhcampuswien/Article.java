@@ -6,7 +6,8 @@ public class Article {
 
     // Constructor
     public Article(String author, String title){
-
+        this.author = author;
+        this.title = title;
     }
 
     public String getAuthor() {
@@ -18,7 +19,10 @@ public class Article {
     }
 
     @Override
-    public String toString(){
-        return "String";
+    public String toString() {
+        return "Article{" +
+                "author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
