@@ -125,6 +125,26 @@ public class AppControllerTest {
         assertEquals(0, actual.size());
     }
 
+    @Test
+    @DisplayName ("List contains Bitcoin")
+    public void listContainsBitcoin() {
+        //Arrange
+        List<Article> list = new ArrayList<>();
+        list.add(new Article("Mohamad", "Bitcoin Future"));
+        list.add(new Article("Diana", "Big Tree"));
+        list.add(new Article("Max", "How to Bitcoin"));
+        list.add(new Article("Max", "Old laptop"));
+        list.add(new Article("Alice", "Car in the City"));
+        //Act
+        List<Article> actual = AppController.filterList("bitcoin",list);
+        //Assert
+        assertEquals(2, actual.size());
+        if(!actual.get(0).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(0).getTitle().equalsIgnoreCase("Bitcoin Future"))
+        fail("Filtered articles are not as expected!");
+        if(!actual.get(1).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(1).getTitle().equalsIgnoreCase("Bitcoin Future"))
+        fail("Filtered articles are not as expected!");
+
+    }
 
 
 }
