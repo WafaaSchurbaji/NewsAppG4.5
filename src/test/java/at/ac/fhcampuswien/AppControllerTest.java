@@ -75,8 +75,6 @@ public class AppControllerTest {
             fail("Filtered articles are not as expected!");
         if (!actual.get(1).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(1).getTitle().equalsIgnoreCase("Old laptop") )
             fail("Filtered articles are not as expected!");
-
-
     }
     @Test
     @DisplayName("Query is empty")
@@ -146,5 +144,41 @@ public class AppControllerTest {
 
     }
 
+    @Test
+    @DisplayName ("getTopHeadlinesAustria with empty list of articles")
+    public void testGetTopHeadlinesAustriaWhereArticlesIsNull(){
+        assertEquals(appController.getArticles(), null);
+        appController.getTopHeadlinesAustria();
+        assertNotEquals(appController.getTopHeadlinesAustria(), null);
+    }
+
+    @Test
+    @DisplayName("getTopHeadlinesAustria with filled list of articles")
+    public void testGetTopHeadlinesAustriaWithFilledArticleList(){
+        List<Article> testArticles = AppController.generateMockList();
+        appController.setArticles(testArticles);
+        //Currently getTopHeadlinesAustria method extracts all articles
+        assertEquals(appController.getTopHeadlinesAustria(), testArticles);
+    }
+
+    @Test
+    @DisplayName("getAllNewsBitcoin with list of articles containing Bitcoin")
+    public void testGetAllNewsBitcoin(){
+        List<Article> testArticles = AppController.generateMockList();
+        Article toFilter = new Article("Testautor", "Bitcoin Network");
+        testArticles.add(toFilter);
+        appController.setArticles(testArticles);
+        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), true);
+    }
+
+    @Test
+    @DisplayName("getAllNewsBitcoin with list of articles filtered not containing Bitcoin")
+    public void testGetAllNewsBitcoinFilteringArticle(){
+        List<Article> testArticles = AppController.generateMockList();
+        Article toFilter = new Article("Testautor", "Etherium Network");
+        testArticles.add(toFilter);
+        appController.setArticles(testArticles);
+        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), false);
+    }
 
 }
