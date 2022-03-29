@@ -17,6 +17,19 @@ public class AppControllerTest {
         appController = new AppController();
     }
 
+    @Test
+    @DisplayName("List should be set")
+    public void listShouldBeSet(){
+        List<Article> list = new ArrayList<>();
+        Article article = new Article("New Author", "New Title");
+        list.add(article);
+        appController.setArticles(list);
+        List<Article> actual = appController.getArticles();
+        assertEquals(1,actual.size(),"List sizes should be the same");
+        assertEquals(actual.get(0).getAuthor(),article.getAuthor(),"Authors is not the same");
+        assertEquals(actual.get(0).getTitle(),article.getTitle(),"Title is not the same");
+
+    }
 
 
     @Test
