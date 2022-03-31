@@ -9,5 +9,9 @@ public class App {
             System.out.println(article.getAuthor() + "\t\t" + article.getTitle());
             System.out.println("#######################################################################################");
         }
+
+
+        Menu menu = new Menu();
+        menu.start();
     }
 }

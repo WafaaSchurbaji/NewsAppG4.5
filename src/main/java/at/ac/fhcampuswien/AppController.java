@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 public class AppController {
     private List<Article> articles;
     public AppController(){
+
     }
 
     public void setArticles(List<Article> articles){

@@ -1,6 +1,21 @@
 package at.ac.fhcampuswien;
 
+import java.util.Objects;
+
 public class Article {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Article)) return false;
+        Article article = (Article) o;
+        return Objects.equals(getAuthor(), article.getAuthor()) && Objects.equals(getTitle(), article.getTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAuthor(), getTitle());
+    }
+
     private String author;
     private String title;
 
@@ -20,9 +35,7 @@ public class Article {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "author='" + author + '\'' +
-                ", title='" + title + '\'' +
-                '}';
+        return " Title:" + title + '\'' +
+                "," +  "Autor" + author;
     }
 }

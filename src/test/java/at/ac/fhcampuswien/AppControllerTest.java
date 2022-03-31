@@ -3,6 +3,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.PackageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,22 +16,28 @@ public class AppControllerTest {
     @BeforeEach
     void setup(){
         appController = new AppController();
+
     }
+
+    /**
+     * Tests for Set Method
+     */
 
     @Test
-    @DisplayName("List should be set")
+    @DisplayName("List can be set")
     public void listShouldBeSet(){
         List<Article> list = new ArrayList<>();
-        Article article = new Article("New Author", "New Title");
+        Article article = new Article("New List", "New List");
         list.add(article);
-        appController.setArticles(list);
-        List<Article> actual = appController.getArticles();
-        assertEquals(1,actual.size(),"List sizes should be the same");
-        assertEquals(actual.get(0).getAuthor(),article.getAuthor(),"Authors is not the same");
-        assertEquals(actual.get(0).getTitle(),article.getTitle(),"Title is not the same");
+        appController.setArticles(list);//list wird gesetzt durch die appcontroller
+        List<Article> actual = appController.getArticles();//um zu wissen welche list ist jetzt in appcontroller
+        assertEquals(article, actual.get(0), "Lists sizes should be the same");//vergleicht ob  die artikeln die in der list sind die selbe die ich hier hab
 
     }
 
+    /**
+     * Tests for getArticleCount Method
+     */
 
     @Test
     @DisplayName("List count when not empty")
@@ -56,7 +63,15 @@ public class AppControllerTest {
     public void listCountWhenNull(){
         appController.setArticles(null);
         assertEquals(0, appController.getArticleCount());
+        //or.....
+        // assertNull(null,"listCount should be null");
     }
+
+    /**
+     * Tests for FilterList Method
+     */
+
+
     @Test
     @DisplayName("List is filtered")
     public void listShouldBeFiltered(){
@@ -71,6 +86,8 @@ public class AppControllerTest {
         List<Article> actual = AppController.filterList("laptop",list);
         //Assert
         assertEquals(2, actual.size());
+        assertNotNull(actual,"the List should not be null");
+        //hier wird geschaut nach dem ich meine liste gefiltert habe ob meine zwei artikeln die ich hier hab auch da sind
         if (!actual.get(0).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(0).getTitle().equalsIgnoreCase("Old laptop") )
             fail("Filtered articles are not as expected!");
         if (!actual.get(1).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(1).getTitle().equalsIgnoreCase("Old laptop") )
@@ -96,8 +113,7 @@ public class AppControllerTest {
     @Test
     @DisplayName("List is null")
     public void listShouldBeFilteredListNull(){
-        assertEquals(null,AppController.filterList("query",null));
-
+        assertNull(null,"The list should be Null ");
     }
 
     @Test
@@ -109,19 +125,67 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("Query is not found")
-    public void listShouldBeFilteredQueryNotFound(){
+    public void listShouldBeFilteredQueryNotFound() {
         //Arrange
         List<Article> list = new ArrayList<>();
-        list.add(new Article("mohamad","the Sea"));
-        list.add(new Article("Diana","Big Tree"));
-        list.add(new Article("Max","The Laptop"));
-        list.add(new Article("Max","Old laptop"));
-        list.add(new Article("Alice","Car in the City"));
+        list.add(new Article("mohamad", "the Sea"));
+        list.add(new Article("Diana", "Big Tree"));
+        list.add(new Article("Max", "The Laptop"));
+        list.add(new Article("Max", "Old laptop"));
+        list.add(new Article("Alice", "Car in the City"));
         //Act
-        List<Article> actual = AppController.filterList("test",list);
+        List<Article> actual = AppController.filterList("test", list);
         //Assert
         assertEquals(0, actual.size());
     }
+
+
+    /**
+     * Tests for getTopHeadlinesAustria Method
+     */
+
+    @Test
+    @DisplayName ("getTopHeadlinesAustria with empty list of articles")
+    public void testGetTopHeadlinesAustriaWhereArticlesIsNull(){
+        assertEquals(appController.getArticles(), null);
+        appController.getTopHeadlinesAustria();
+        assertNotEquals(appController.getTopHeadlinesAustria(), null);
+    }
+
+    @Test
+    @DisplayName("getTopHeadlinesAustria with filled list of articles")
+    public void testGetTopHeadlinesAustriaWithFilledArticleList(){
+        List<Article> testArticles = AppController.generateMockList();
+        appController.setArticles(testArticles);
+        //Currently getTopHeadlinesAustria method extracts all articles
+        assertEquals(appController.getTopHeadlinesAustria(), testArticles);
+    }
+
+    /**
+     * Tests for getAllNewsBitcoin Method
+     */
+
+    @Test
+    @DisplayName("getAllNewsBitcoin with list of articles containing Bitcoin")
+    public void testGetAllNewsBitcoin(){
+        List<Article> testArticles = AppController.generateMockList();
+        Article toFilter = new Article("Testautor", "Bitcoin Network");
+        testArticles.add(toFilter);
+        appController.setArticles(testArticles);
+        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), true);
+    }
+
+    @Test
+    @DisplayName("getAllNewsBitcoin with list of articles filtered not containing Bitcoin")
+    public void testGetAllNewsBitcoinFilteringArticle(){
+        List<Article> testArticles = AppController.generateMockList();
+        Article toFilter = new Article("Testautor", "Etherium Network");
+        testArticles.add(toFilter);
+        appController.setArticles(testArticles);
+        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), false);
+    }
+
+
 
     @Test
     @DisplayName ("List contains Bitcoin")
@@ -143,43 +207,7 @@ public class AppControllerTest {
         fail("Filtered articles are not as expected!");
 
     }
-
-    @Test
-    @DisplayName ("getTopHeadlinesAustria with empty list of articles")
-    public void testGetTopHeadlinesAustriaWhereArticlesIsNull(){
-        assertEquals(appController.getArticles(), null);
-        appController.getTopHeadlinesAustria();
-        assertNotEquals(appController.getTopHeadlinesAustria(), null);
-    }
-
-    @Test
-    @DisplayName("getTopHeadlinesAustria with filled list of articles")
-    public void testGetTopHeadlinesAustriaWithFilledArticleList(){
-        List<Article> testArticles = AppController.generateMockList();
-        appController.setArticles(testArticles);
-        //Currently getTopHeadlinesAustria method extracts all articles
-        assertEquals(appController.getTopHeadlinesAustria(), testArticles);
-    }
-
-    @Test
-    @DisplayName("getAllNewsBitcoin with list of articles containing Bitcoin")
-    public void testGetAllNewsBitcoin(){
-        List<Article> testArticles = AppController.generateMockList();
-        Article toFilter = new Article("Testautor", "Bitcoin Network");
-        testArticles.add(toFilter);
-        appController.setArticles(testArticles);
-        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), true);
-    }
-
-    @Test
-    @DisplayName("getAllNewsBitcoin with list of articles filtered not containing Bitcoin")
-    public void testGetAllNewsBitcoinFilteringArticle(){
-        List<Article> testArticles = AppController.generateMockList();
-        Article toFilter = new Article("Testautor", "Etherium Network");
-        testArticles.add(toFilter);
-        appController.setArticles(testArticles);
-        assertEquals(appController.getAllNewsBitcoin().contains(toFilter), false);
-    }
+    
 
     @Test
     @DisplayName("Query is empty")
@@ -208,5 +236,8 @@ public class AppControllerTest {
     public void BitcoinListShouldBeFilteredListIsEmpty(){
         assertEquals(new ArrayList<>(),AppController.filterList("bitcoin", new ArrayList<>()));
     }
+
+
+
 
 }
