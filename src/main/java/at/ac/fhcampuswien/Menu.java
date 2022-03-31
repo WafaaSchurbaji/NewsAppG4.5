@@ -1,29 +1,26 @@
 package at.ac.fhcampuswien;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
 public class Menu  {
-    private AppController controller;
+    private AppController controller = new AppController();
     private static final String INVALID_USER_INPUT_MESSAGE = "Invalid Input";
     private static final String EXIT_MESSAGE="Bye Bye";
 
 
+    Scanner scanner = new Scanner(System.in);
+
+
     public  void  start(){
         printMenu();
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine().trim().toLowerCase();
-
+        String input = scanner.next().trim().toLowerCase();
         handleInput(input);
             }
 
 
     private void handleInput(String input){
-      /* if (!(input == "a" || input == "b" || input == "y" || input == "q"))
-       {
-          // printInvalidInputMessage();
-        }*/
+
         if ("a".equals(input)) {
             getTopHeadlinesAustria(controller);
         } else if ("b".equals(input)) {
@@ -34,23 +31,21 @@ public class Menu  {
             printExitMessage();
         } else {
             printInvalidInputMessage();
+          //  scanner.nextLine().trim().toLowerCase();
         }
     }
 
     private void getArticleCount(AppController ctrl) {
-
-        System.out.println(this.controller.getArticleCount());
+        System.out.println(ctrl.getArticleCount());
     }
 
     private void getTopHeadlinesAustria(AppController ctrl) {
-        controller = new AppController();
-        System.out.println( controller.getTopHeadlinesAustria());
+        System.out.println( ctrl.getTopHeadlinesAustria());
 
 
     }
     private void getAllNewsBitcoin(AppController ctrl) {
-        controller= new AppController();
-        System.out.println(controller.getAllNewsBitcoin());
+        System.out.println(ctrl.getAllNewsBitcoin());
 
     }
 
@@ -60,21 +55,24 @@ public class Menu  {
     }
 
     private static void printInvalidInputMessage(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println(INVALID_USER_INPUT_MESSAGE);
-        System.out.println("Please enter what you wanna do:");
-       scanner.nextLine().trim().toLowerCase();
+        //System.out.println("Please enter what you wanna do:");
+
     }
     private static void printMenu() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("**********************************");
-        System.out.println("*     Welcome to NewsApp     *");
-        System.out.println("**********************************");
-        System.out.println("Enter what you wanna do:");
-        System.out.println("a: Get top headlines austria \nb: Get all news about bitcoin" +
-                "\ny: Count articles \nq: Quit program");
-        System.out.println();
+
+        System.out.println("**********************************\n"+
+        "*     Welcome to NewsApp     *\n" +
+        "**********************************\n" +
+       "Enter what you wanna do:\n"+
+        "a: Get top headlines austria \n" +
+                "b: Get all news about bitcoin\n" +
+                "y: Count articles \n" +
+                "q: Quit program");
     }
+
+
+
 }
 
 

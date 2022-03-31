@@ -35,7 +35,5 @@ public class Article {
 
     @Override
     public String toString() {
-        return " Title:" + title + '\'' +
-                "," +  "Autor" + author;
-    }
+        return "Title: " + title + "\nAuthor: " + author ;}
 }

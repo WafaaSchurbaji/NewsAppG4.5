@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 public class AppController {
     private List<Article> articles;
     public AppController(){
+        articles = new ArrayList<>();
+        articles = generateMockList();
 
     }
 
