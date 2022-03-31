@@ -128,11 +128,11 @@ public class AppControllerTest {
     public void listContainsBitcoin() {
         //Arrange
         List<Article> list = new ArrayList<>();
-        list.add(new Article("Mohamad", "Bitcoin Future"));
-        list.add(new Article("Diana", "Big Tree"));
-        list.add(new Article("Max", "How to Bitcoin"));
-        list.add(new Article("Max", "Old laptop"));
-        list.add(new Article("Alice", "Car in the City"));
+        list.add(new Article("James", "Bitcoin Future"));
+        list.add(new Article("Silvana", "Yellow Brick Road"));
+        list.add(new Article("Agnes", "How to Bitcoin"));
+        list.add(new Article("Ashley", "The Way of Life"));
+        list.add(new Article("Frank", "The Brand New Car"));
         //Act
         List<Article> actual = AppController.filterList("bitcoin",list);
         //Assert
@@ -179,6 +179,34 @@ public class AppControllerTest {
         testArticles.add(toFilter);
         appController.setArticles(testArticles);
         assertEquals(appController.getAllNewsBitcoin().contains(toFilter), false);
+    }
+
+    @Test
+    @DisplayName("Query is empty")
+    public void filteredListWithQueryEmpty(){
+        //Arrange
+        List<Article> list = new ArrayList<>();
+        list.add(new Article("Stefan", "How to be successful with Bitcoin"));
+        list.add(new Article("Lisa", "Digital Currency: Bitcoin "));
+        list.add(new Article("Pascal", "The Yellow Car"));
+        list.add(new Article("Pierre", "The Greatest Show"));
+        list.add(new Article("Elodie", "How to succeed without really trying"));
+        //Act
+        List<Article> actual = AppController.filterList("", list);
+        //Assert
+        assertEquals(list,actual);
+    }
+
+    @Test
+    @DisplayName("List is null")
+    public void BitcoinlistShouldBeFilteredListNull(){
+        assertEquals(null,AppController.filterList("bitcoin",null));
+    }
+
+    @Test
+    @DisplayName("The List is EMPTY")
+    public void BitcoinListShouldBeFilteredListIsEmpty(){
+        assertEquals(new ArrayList<>(),AppController.filterList("bitcoin", new ArrayList<>()));
     }
 
 }
