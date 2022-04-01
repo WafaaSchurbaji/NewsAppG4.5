@@ -48,9 +48,9 @@ public class AppController {
         for (int i = 0; i < 50; i++){
             mock.add(new Article(faker.name().fullName(), faker.book().title()));
         }
-        mock.add(new Article("Wafaa", "Bitcoin Future"));
-        mock.add(new Article("Max Mustermann", "The era of BitCoin"));
-        mock.add(new Article("Tester", "How to Bitcoin"));
+        mock.add(new Article("Eric Adams", "a Bitcoin Booster, Is Taking First Paycheck in Crypto"));
+        mock.add(new Article("New York Times", "Irishman held against his will in China for 3 years reunited with 'unbelievably happy' family"));
+        mock.add(new Article("News Sky", "Mother who won $127, 000 tells how she still ended up homeless"));
         return mock;
     }
 }
