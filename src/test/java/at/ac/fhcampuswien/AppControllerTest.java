@@ -147,8 +147,6 @@ public class AppControllerTest {
     @Test
     @DisplayName ("getTopHeadlinesAustria with empty list of articles")
     public void testGetTopHeadlinesAustriaWhereArticlesIsNull(){
-        assertEquals(appController.getArticles(), null);
-        appController.getTopHeadlinesAustria();
         assertNotEquals(appController.getTopHeadlinesAustria(), null);
     }
 
