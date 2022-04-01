@@ -1,7 +1,5 @@
 package at.ac.fhcampuswien;
-
 import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;

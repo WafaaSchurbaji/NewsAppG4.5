@@ -1,5 +1,4 @@
 package at.ac.fhcampuswien;
-
 import java.util.Objects;
 
 public class Article {

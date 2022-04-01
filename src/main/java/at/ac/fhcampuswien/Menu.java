@@ -1,6 +1,4 @@
 package at.ac.fhcampuswien;
-
-
 import java.util.Scanner;
 
 public class Menu  {
@@ -62,7 +60,6 @@ public class Menu  {
 
     private static void printInvalidInputMessage(){
         System.out.println(INVALID_USER_INPUT_MESSAGE);
-        //System.out.println("Please enter what you wanna do:");
 
     }
     private static void printMenu() {
