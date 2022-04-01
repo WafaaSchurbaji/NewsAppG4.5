@@ -16,6 +16,7 @@ public class Menu  {
         printMenu();
         String input = scanner.next().trim().toLowerCase();
         handleInput(input);
+
             }
 
 
@@ -23,15 +24,20 @@ public class Menu  {
 
         if ("a".equals(input)) {
             getTopHeadlinesAustria(controller);
+           start();
         } else if ("b".equals(input)) {
             getAllNewsBitcoin(controller);
+           start();
         } else if ("y".equals(input)) {
             getArticleCount(controller);
+            start();
         } else if ("q".equals(input)) {
             printExitMessage();
+
         } else {
             printInvalidInputMessage();
-          //  scanner.nextLine().trim().toLowerCase();
+            start();
+
         }
     }
 
