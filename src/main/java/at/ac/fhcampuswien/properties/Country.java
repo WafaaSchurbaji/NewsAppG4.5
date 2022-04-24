@@ -67,4 +67,23 @@ public enum Country implements ApiProperties {
     public String getValue() {
         return this.value;
     }
+
+    public static Country getCountryByCode(String code) {
+        for (Country country : Country.values()) {
+            if (country.value.equalsIgnoreCase(code)) return country;
+        }
+        return null;
+    }
+
+    public static Country getCountryByPrettyName(String name) {
+        for (Country country : Country.values()) {
+            if (country.getPrettyName().equalsIgnoreCase(name)) return country;
+        }
+        return null;
+    }
+
+    public String getPrettyName() {
+        String prettyName = name().toLowerCase().replaceAll("_", " ");
+        return prettyName.substring(0, 1).toUpperCase() + prettyName.substring(1);
+    }
 }

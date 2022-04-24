@@ -1,39 +1,29 @@
 package at.ac.fhcampuswien.api;
 
 
-import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.properties.Endpoint;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class NewsApi {
 
     private static final NameValuePair API_KEY = new NameValuePair("apiKey", "ca6e67324c204d80bb4146f96880a632");
     private static final String BASE_URL = "https://newsapi.org/v2/";
+    private static final Gson gson = new Gson();
 
     public static NewsResponse getNews(UrlProperties urlProperties) {
         String url = getUrl(urlProperties);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
-        NewsResponse newsResponse = new NewsResponse();
+        NewsResponse newsResponse = null;
         try (Response response = client.newCall(request).execute()) {
             String json = Objects.requireNonNull(response.body()).string();
-            Gson gson = new Gson();
-            Type listType = new TypeToken<ArrayList<Article>>() {
-            }.getType();
-            List<Article> articles = gson.fromJson(json, listType);
-            newsResponse.setArticles(articles);
-            newsResponse.setStatus(response.code());
-            newsResponse.setTotalResults(articles.size());
+            newsResponse = gson.fromJson(json, NewsResponse.class);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

@@ -27,4 +27,11 @@ public enum Language implements ApiProperties {
         return this.value;
     }
 
+    public static Language getLanguageByCode(String code) {
+        for (Language language : Language.values()) {
+            if (language.value.equalsIgnoreCase(code)) return language;
+        }
+        return null;
+    }
+
 }
