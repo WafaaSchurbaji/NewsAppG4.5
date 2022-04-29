@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.api;
 
-import at.ac.fhcampuswien.Article;
+import at.ac.fhcampuswien.entity.Article;
 
 import java.util.List;
 

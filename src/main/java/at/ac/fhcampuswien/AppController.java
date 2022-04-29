@@ -1,4 +1,5 @@
 package at.ac.fhcampuswien;
+import at.ac.fhcampuswien.entity.Article;
 import com.github.javafaker.Faker;
 import java.util.ArrayList;
 import java.util.List;
