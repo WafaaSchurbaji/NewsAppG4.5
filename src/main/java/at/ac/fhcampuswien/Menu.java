@@ -97,15 +97,15 @@ public class Menu  {
 
 
     private static void printMenu() {
-
-        System.out.println("**********************************\n"+
-        "*     Welcome to NewsApp     *\n" +
-        "**********************************\n" +
-       "Enter what you wanna do:\n"+
-        "a: Get top headlines austria \n" +
-                "b: Get all news about bitcoin\n" +
-                "y: Count articles \n" +
-                "q: Quit program");
+        System.out.println("""
+                **********************************
+                *       Welcome to NewsApp       *
+                **********************************
+                Enter what you wanna do:
+                a: Get top headlines by country\s
+                b: Get all news about bitcoin
+                c: Get news by topic\s
+                q: Quit program""");
     }
 
 
