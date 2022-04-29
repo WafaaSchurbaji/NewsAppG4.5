@@ -27,6 +27,7 @@ public class Article {
         return title;
     }
 
+    //Second Constructor
     public Article(String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         this.author = author;
         this.title = title;
