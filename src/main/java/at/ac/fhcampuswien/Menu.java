@@ -1,4 +1,9 @@
 package at.ac.fhcampuswien;
+import at.ac.fhcampuswien.api.NewsResponse;
+import at.ac.fhcampuswien.entity.Article;
+import at.ac.fhcampuswien.properties.SortBy;
+
+
 import java.util.Scanner;
 
 public class Menu  {
@@ -62,6 +67,35 @@ public class Menu  {
         System.out.println(INVALID_USER_INPUT_MESSAGE);
 
     }
+
+    private void printResponse(NewsResponse response) {
+        System.out.println("\nResponse Status: " + response.getStatus());
+        System.out.println("Articles count: " + response.getTotalResults());
+        System.out.println("**\n\n");
+        for (Article article : response.getArticles()) {
+            System.out.println(article.toString());
+            System.out.println("**\n\n");
+        }
+    }
+
+    private SortBy getSortingPreference() {
+        System.out.println("\nChoose from the following to sort by it:");
+        System.out.println("**");
+        for (SortBy sortBy : SortBy.values()) {
+            System.out.println(sortBy.name().toLowerCase());
+        }
+        System.out.println("**\n");
+        try {
+            scanner = new Scanner(System.in);
+            return SortBy.valueOf(scanner.next().trim().toUpperCase());
+        } catch (Exception exception) {
+            printInvalidInputMessage();
+            getSortingPreference();
+        }
+        return SortBy.DEFAULT;
+    }
+
+
     private static void printMenu() {
 
         System.out.println("**********************************\n"+
