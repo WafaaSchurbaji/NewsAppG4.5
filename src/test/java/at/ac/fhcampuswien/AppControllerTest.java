@@ -73,7 +73,6 @@ public class AppControllerTest {
      * Tests for FilterList Method
      */
 
-
     @Test
     @DisplayName("List is filtered")
     public void listShouldBeFiltered() {

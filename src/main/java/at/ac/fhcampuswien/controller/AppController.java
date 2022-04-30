@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.api.NewsResponse;
 import at.ac.fhcampuswien.api.UrlProperties;
 import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.properties.*;
+import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,8 @@ public class AppController {
         return articles != null ? articles.size() : 0;
     }
 
-    protected static List<Article> filterList(String query, List<Article> articles) {
+    @Deprecated
+    public static List<Article> filterList(String query, List<Article> articles) {
         if (articles == null)
             return null;
         if (query == null || query.isEmpty())
@@ -68,5 +70,19 @@ public class AppController {
         }
         return result;
     }
+
+    @Deprecated
+    public static List<Article> generateMockList() {
+        List<Article> mock = new ArrayList<>();
+        Faker faker = new Faker();
+        for (int i = 0; i < 50; i++) {
+            mock.add(new Article(faker.name().fullName(), faker.book().title()));
+        }
+        mock.add(new Article("Wafaa", "Bitcoin Future"));
+        mock.add(new Article("Max Mustermann", "The era of BitCoin"));
+        mock.add(new Article("Tester", "How to Bitcoin"));
+        return mock;
+    }
+
 
 }
