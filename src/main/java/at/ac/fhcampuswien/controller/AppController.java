@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien;
+package at.ac.fhcampuswien.controller;
 
 import at.ac.fhcampuswien.api.NewsApi;
 import at.ac.fhcampuswien.api.NewsResponse;

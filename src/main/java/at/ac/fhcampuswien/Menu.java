@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.api.NewsResponse;
+import at.ac.fhcampuswien.controller.AppController;
 import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.properties.Category;
 import at.ac.fhcampuswien.properties.Country;
