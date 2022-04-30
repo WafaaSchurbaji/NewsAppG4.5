@@ -80,7 +80,7 @@ public class Menu {
         }
     }
 
-
+    //
     private void getAllNewsBitcoin() {
         Language language = getLanguagePreference();
         SortBy sortBy = getSortingPreference();
