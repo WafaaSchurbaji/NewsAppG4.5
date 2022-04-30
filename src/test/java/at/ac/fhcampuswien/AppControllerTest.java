@@ -1,10 +1,13 @@
 package at.ac.fhcampuswien;
+
 import at.ac.fhcampuswien.entity.Article;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -12,7 +15,7 @@ public class AppControllerTest {
     private static AppController appController;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         appController = new AppController();
 
     }
@@ -23,7 +26,7 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("List can be set")
-    public void listShouldBeSet(){
+    public void listShouldBeSet() {
         List<Article> list = new ArrayList<>();
         Article article = new Article("New List", "New List");
         list.add(article);
@@ -39,9 +42,9 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("List count when not empty")
-    public void listCountWhenNotEmpty(){
+    public void listCountWhenNotEmpty() {
         List<Article> list = new ArrayList<>();
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             list.add(new Article("New List", "New List"));
         }
         appController.setArticles(list);
@@ -50,7 +53,7 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("List count when empty")
-    public void listCountWhenEmpty(){
+    public void listCountWhenEmpty() {
         List<Article> list = new ArrayList<>();
         appController.setArticles(list);
         assertEquals(0, appController.getArticleCount());
@@ -58,7 +61,7 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("List count when null")
-    public void listCountWhenNull(){
+    public void listCountWhenNull() {
         appController.setArticles(null);
         assertEquals(0, appController.getArticleCount());
         //or.....
@@ -72,52 +75,53 @@ public class AppControllerTest {
 
     @Test
     @DisplayName("List is filtered")
-    public void listShouldBeFiltered(){
+    public void listShouldBeFiltered() {
         //Arrange
         List<Article> list = new ArrayList<>();
-        list.add(new Article("mohamad","the Sea"));
-        list.add(new Article("Diana","Big Tree"));
-        list.add(new Article("Max","The Laptop"));
-        list.add(new Article("Max","Old laptop"));
-        list.add(new Article("Alice","Car in the City"));
+        list.add(new Article("mohamad", "the Sea"));
+        list.add(new Article("Diana", "Big Tree"));
+        list.add(new Article("Max", "The Laptop"));
+        list.add(new Article("Max", "Old laptop"));
+        list.add(new Article("Alice", "Car in the City"));
         //Act
-        List<Article> actual = AppController.filterList("laptop",list);
+        List<Article> actual = AppController.filterList("laptop", list);
         //Assert
         assertEquals(2, actual.size());
-        assertNotNull(actual,"the List should not be null");
+        assertNotNull(actual, "the List should not be null");
         //hier wird geschaut nach dem ich meine liste gefiltert habe ob meine zwei artikeln die ich hier hab auch da sind
-        if (!actual.get(0).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(0).getTitle().equalsIgnoreCase("Old laptop") )
+        if (!actual.get(0).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(0).getTitle().equalsIgnoreCase("Old laptop"))
             fail("Filtered articles are not as expected!");
-        if (!actual.get(1).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(1).getTitle().equalsIgnoreCase("Old laptop") )
+        if (!actual.get(1).getTitle().equalsIgnoreCase("The Laptop") && !actual.get(1).getTitle().equalsIgnoreCase("Old laptop"))
             fail("Filtered articles are not as expected!");
     }
+
     @Test
     @DisplayName("Query is empty")
-    public void listShouldBeFilteredQueryEmpty(){
+    public void listShouldBeFilteredQueryEmpty() {
         //Arrange
         List<Article> list = new ArrayList<>();
-        list.add(new Article("mohamad","the Sea"));
-        list.add(new Article("Diana","Big Tree"));
-        list.add(new Article("Max","The Laptop"));
-        list.add(new Article("Max","Old laptop"));
-        list.add(new Article("Alice","Car in the City"));
+        list.add(new Article("mohamad", "the Sea"));
+        list.add(new Article("Diana", "Big Tree"));
+        list.add(new Article("Max", "The Laptop"));
+        list.add(new Article("Max", "Old laptop"));
+        list.add(new Article("Alice", "Car in the City"));
         //Act
-        List<Article> actual = AppController.filterList("",list);
+        List<Article> actual = AppController.filterList("", list);
         //Assert
-        assertEquals(list,actual);
+        assertEquals(list, actual);
 
     }
 
     @Test
     @DisplayName("List is null")
-    public void listShouldBeFilteredListNull(){
-        assertNull(null,"The list should be Null ");
+    public void listShouldBeFilteredListNull() {
+        assertNull(null, "The list should be Null ");
     }
 
     @Test
     @DisplayName("List is empty")
-    public void listShouldBeFilteredListEmpty(){
-        assertEquals(new ArrayList<>(),AppController.filterList("query",new ArrayList<>()));
+    public void listShouldBeFilteredListEmpty() {
+        assertEquals(new ArrayList<>(), AppController.filterList("query", new ArrayList<>()));
 
     }
 
@@ -142,12 +146,16 @@ public class AppControllerTest {
      * Tests for getTopHeadlinesAustria Method
      */
 
+    /*
     @Test
     @DisplayName ("getTopHeadlinesAustria with empty list of articles")
     public void testGetTopHeadlinesAustriaWhereArticlesIsNull(){
         assertNotEquals(appController.getTopHeadlinesAustria(), null);
     }
 
+     */
+
+    /*
     @Test
     @DisplayName("getTopHeadlinesAustria with filled list of articles")
     public void testGetTopHeadlinesAustriaWithFilledArticleList(){
@@ -157,10 +165,13 @@ public class AppControllerTest {
         assertEquals(appController.getTopHeadlinesAustria(), testArticles);
     }
 
+     */
+
     /**
      * Tests for getAllNewsBitcoin Method
      */
 
+    /*
     @Test
     @DisplayName("getAllNewsBitcoin with list of articles containing Bitcoin")
     public void testGetAllNewsBitcoin(){
@@ -171,6 +182,9 @@ public class AppControllerTest {
         assertEquals(appController.getAllNewsBitcoin().contains(toFilter), true);
     }
 
+     */
+
+    /*
     @Test
     @DisplayName("getAllNewsBitcoin with list of articles filtered not containing Bitcoin")
     public void testGetAllNewsBitcoinFilteringArticle(){
@@ -181,10 +195,9 @@ public class AppControllerTest {
         assertEquals(appController.getAllNewsBitcoin().contains(toFilter), false);
     }
 
-
-
+     */
     @Test
-    @DisplayName ("List contains Bitcoin")
+    @DisplayName("List contains Bitcoin")
     public void listContainsBitcoin() {
         //Arrange
         List<Article> list = new ArrayList<>();
@@ -194,20 +207,20 @@ public class AppControllerTest {
         list.add(new Article("Ashley", "The Way of Life"));
         list.add(new Article("Frank", "The Brand New Car"));
         //Act
-        List<Article> actual = AppController.filterList("bitcoin",list);
+        List<Article> actual = AppController.filterList("bitcoin", list);
         //Assert
         assertEquals(2, actual.size());
-        if(!actual.get(0).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(0).getTitle().equalsIgnoreCase("Bitcoin Future"))
-        fail("Filtered articles are not as expected!");
-        if(!actual.get(1).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(1).getTitle().equalsIgnoreCase("Bitcoin Future"))
-        fail("Filtered articles are not as expected!");
+        if (!actual.get(0).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(0).getTitle().equalsIgnoreCase("Bitcoin Future"))
+            fail("Filtered articles are not as expected!");
+        if (!actual.get(1).getTitle().equalsIgnoreCase("How to Bitcoin") && !actual.get(1).getTitle().equalsIgnoreCase("Bitcoin Future"))
+            fail("Filtered articles are not as expected!");
 
     }
-    
+
 
     @Test
     @DisplayName("Query is empty")
-    public void filteredListWithQueryEmpty(){
+    public void filteredListWithQueryEmpty() {
         //Arrange
         List<Article> list = new ArrayList<>();
         list.add(new Article("Stefan", "How to be successful with Bitcoin"));
@@ -218,22 +231,20 @@ public class AppControllerTest {
         //Act
         List<Article> actual = AppController.filterList("", list);
         //Assert
-        assertEquals(list,actual);
+        assertEquals(list, actual);
     }
 
     @Test
     @DisplayName("List is null")
-    public void BitcoinlistShouldBeFilteredListNull(){
-        assertEquals(null,AppController.filterList("bitcoin",null));
+    public void BitcoinlistShouldBeFilteredListNull() {
+        assertEquals(null, AppController.filterList("bitcoin", null));
     }
 
     @Test
     @DisplayName("The List is EMPTY")
-    public void BitcoinListShouldBeFilteredListIsEmpty(){
-        assertEquals(new ArrayList<>(),AppController.filterList("bitcoin", new ArrayList<>()));
+    public void BitcoinListShouldBeFilteredListIsEmpty() {
+        assertEquals(new ArrayList<>(), AppController.filterList("bitcoin", new ArrayList<>()));
     }
-
-
 
 
 }

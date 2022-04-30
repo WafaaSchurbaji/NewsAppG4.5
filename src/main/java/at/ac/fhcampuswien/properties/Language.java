@@ -34,4 +34,16 @@ public enum Language implements ApiProperties {
         return null;
     }
 
+    public static Language getLanguageByPrettyName(String name) {
+        for (Language language : Language.values()) {
+            if (language.getPrettyName().equalsIgnoreCase(name)) return language;
+        }
+        return null;
+    }
+
+    public String getPrettyName() {
+        String prettyName = name().toLowerCase().replaceAll("_", " ");
+        return prettyName.substring(0, 1).toUpperCase() + prettyName.substring(1);
+    }
+
 }

@@ -1,13 +1,17 @@
 package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.api.NewsResponse;
-import at.ac.fhcampuswien.controller.AppController;
 import at.ac.fhcampuswien.entity.Article;
+import at.ac.fhcampuswien.properties.Category;
 import at.ac.fhcampuswien.properties.Country;
 import at.ac.fhcampuswien.properties.Language;
 import at.ac.fhcampuswien.properties.SortBy;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
 
 public class Menu {
     private final AppController controller = new AppController();
@@ -18,14 +22,11 @@ public class Menu {
     //getTopHeadlinesAustria
     //getAllNewsBitcoin
     //getNews
-
-
     public void start() {
         printMenu();
         String input = scanner.next().trim().toLowerCase();
         handleInput(input);
     }
-
 
     private void handleInput(String input) {
         if ("a".equals(input)) {
@@ -43,11 +44,26 @@ public class Menu {
     }
 
     private void getTopHeadlines() {
-
+        try {
+            printCategoryOptions();
+            scanner = new Scanner(System.in);
+            Category category = Category.valueOf(scanner.next().toUpperCase());
+            Country country = getCountryPreference();
+            NewsResponse response = controller.getTopHeadLines(category, country);
+            printResponse(response);
+        } catch (Exception exception) {
+            printInvalidInputMessage();
+            getTopHeadlines();
+        }
     }
 
     private void printCategoryOptions() {
-
+        System.out.println("\nChoose from the following categories");
+        System.out.println("******************************************");
+        for (Category category : Category.values()) {
+            System.out.println(category.name().toLowerCase());
+        }
+        System.out.println("******************************************\n");
     }
 
     private Country getCountryPreference() {
@@ -69,7 +85,6 @@ public class Menu {
         return Country.DEFAULT;
     }
 
-
     private void printResponse(NewsResponse response) {
         System.out.println("\nResponse Status: " + response.getStatus());
         System.out.println("Articles count: " + response.getTotalResults());
@@ -79,6 +94,7 @@ public class Menu {
             System.out.println("***********************************************************************************************************************\n\n");
         }
     }
+
 
     //
     private void getAllNewsBitcoin() {
@@ -107,11 +123,29 @@ public class Menu {
 
     /**
      * enum elements in a stream array
-     *
-     * @return
      */
-
     private Language getLanguagePreference() {
+        String languages = Arrays.stream(Language.values())
+                .map(Language::getValue)
+                .filter(language -> !StringUtils.isBlank(language))
+                .collect(Collectors.joining(", "));
+        System.out.println("\nEnter your language preference ( " + languages + " )");
+        System.out.println("Type default to use the default value");
+
+        try {
+            for (Language language : Language.values()) {
+                System.out.println(language.getPrettyName());
+            }
+            System.out.println("*****************************************************");
+            scanner = new Scanner(System.in);
+            String language = scanner.next().trim().toUpperCase();
+            if ("default".equalsIgnoreCase(language))
+                return Language.DEFAULT;
+            return Language.getLanguageByPrettyName(language);
+        } catch (Exception exception) {
+            printInvalidInputMessage();
+            getLanguagePreference();
+        }
         return Language.DEFAULT;
     }
 
@@ -133,7 +167,6 @@ public class Menu {
 
     private static void printInvalidInputMessage() {
         System.out.println(INVALID_USER_INPUT_MESSAGE);
-
     }
 
     private static void printMenu() {
@@ -147,7 +180,6 @@ public class Menu {
                 c: Get news by topic\s
                 q: Quit program""");
     }
-
 }
 
 

@@ -1,11 +1,10 @@
 package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.api.NewsApi;
-import at.ac.fhcampuswien.api.UrlProperties;
 import at.ac.fhcampuswien.api.NewsResponse;
+import at.ac.fhcampuswien.api.UrlProperties;
 import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.properties.*;
-import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,14 @@ public class AppController {
     public NewsResponse getAllNewsBitcoin(Language language, SortBy sortBy) {
         UrlProperties urlProperties = new UrlProperties(Endpoint.EVERYTHING);
         urlProperties.setQuery("+Bitcoin");
+        urlProperties.setLanguage(language);
+        urlProperties.setSortBy(sortBy);
+        return NewsApi.getNews(urlProperties);
+    }
+
+    public NewsResponse getNews(String topic, Language language, SortBy sortBy) {
+        UrlProperties urlProperties = new UrlProperties(Endpoint.EVERYTHING);
+        urlProperties.setQuery(topic);
         urlProperties.setLanguage(language);
         urlProperties.setSortBy(sortBy);
         return NewsApi.getNews(urlProperties);
