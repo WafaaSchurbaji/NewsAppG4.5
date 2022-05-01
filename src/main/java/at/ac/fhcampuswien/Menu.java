@@ -44,6 +44,7 @@ public class Menu {
         start();
     }
 
+    //code from Nisad
     private void getTopHeadlines() {
         try {
             printCategoryOptions();
@@ -58,6 +59,7 @@ public class Menu {
         }
     }
 
+    //code from Nisad
     private void printCategoryOptions() {
         System.out.println("\nChoose from the following categories");
         System.out.println("******************************************");
@@ -125,6 +127,7 @@ public class Menu {
     /**
      * enum elements in a stream array
      */
+    //Code from Glory
     private Language getLanguagePreference() {
         String languages = Arrays.stream(Language.values())
                 .map(Language::getValue)
