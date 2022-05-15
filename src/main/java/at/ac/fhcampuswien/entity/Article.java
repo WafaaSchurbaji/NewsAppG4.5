@@ -1,30 +1,24 @@
 package at.ac.fhcampuswien.entity;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
 public class Article {
 
-    private String author;
-    private String title;
+    private final String author;
+    private final String title;
     private String description;
     private String url;
     private String urlToImage;
     private String publishedAt;
     private String content;
+    private Source source;
 
     // Constructor
-    public Article(String author, String title){
+    public Article(String author, String title) {
         this.author = author;
         this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     //Second Constructor
@@ -36,6 +30,14 @@ public class Article {
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public String getDescription() {
@@ -58,9 +60,20 @@ public class Article {
         return content;
     }
 
+    public void setSource(Source source) {
+        this.source = source;
+    }
+
+    public Source getSource() {
+        return this.source;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        if (source != null && !StringUtils.isBlank(source.getName())) {
+            stringBuilder.append("Source: ").append(getSource().getName()).append(System.getProperty("line.separator"));
+        }
         if (!StringUtils.isBlank(getAuthor())) {
             stringBuilder.append("Author: ").append(getAuthor()).append(System.getProperty("line.separator"));
         }
@@ -86,8 +99,7 @@ public class Article {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Article)) return false;
-        Article article = (Article) o;
+        if (!(o instanceof Article article)) return false;
         return Objects.equals(getAuthor(), article.getAuthor()) && Objects.equals(getTitle(), article.getTitle());
     }
 

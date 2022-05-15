@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.api;
 
 
+import at.ac.fhcampuswien.exception.NewsApiException;
 import at.ac.fhcampuswien.properties.Endpoint;
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
@@ -16,7 +17,7 @@ public class NewsApi {
     private static final String BASE_URL = "https://newsapi.org/v2/";
     private static final Gson gson = new Gson();
 
-    public static NewsResponse getNews(UrlProperties urlProperties) {
+    public static NewsResponse getNews(UrlProperties urlProperties) throws NewsApiException {
         String url = getUrl(urlProperties);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url).build();
@@ -25,7 +26,7 @@ public class NewsApi {
             String json = Objects.requireNonNull(response.body()).string();
             newsResponse = gson.fromJson(json, NewsResponse.class);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new NewsApiException("Could not parse the response!\n" + e.getMessage(), e);
         }
         return newsResponse;
     }

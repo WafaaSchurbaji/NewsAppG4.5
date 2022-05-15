@@ -3,6 +3,7 @@ package at.ac.fhcampuswien;
 import at.ac.fhcampuswien.api.NewsResponse;
 import at.ac.fhcampuswien.controller.AppController;
 import at.ac.fhcampuswien.entity.Article;
+import at.ac.fhcampuswien.exception.NewsApiException;
 import at.ac.fhcampuswien.properties.Category;
 import at.ac.fhcampuswien.properties.Country;
 import at.ac.fhcampuswien.properties.Language;
@@ -53,6 +54,8 @@ public class Menu {
             Country country = getCountryPreference();
             NewsResponse response = controller.getTopHeadLines(category, country);
             printResponse(response);
+        } catch (NewsApiException exception) {
+            System.out.println("Something went wrong ... " + exception.getMessage());
         } catch (Exception exception) {
             printInvalidInputMessage();
             getTopHeadlines();
@@ -101,10 +104,14 @@ public class Menu {
 
     //
     private void getAllNewsBitcoin() {
-        Language language = getLanguagePreference();
-        SortBy sortBy = getSortingPreference();
-        NewsResponse response = controller.getAllNewsBitcoin(language, sortBy);
-        printResponse(response);
+        try {
+            Language language = getLanguagePreference();
+            SortBy sortBy = getSortingPreference();
+            NewsResponse response = controller.getAllNewsBitcoin(language, sortBy);
+            printResponse(response);
+        } catch (NewsApiException exception) {
+            System.out.println("Something went wrong ... " + exception.getMessage());
+        }
     }
 
     private SortBy getSortingPreference() {
@@ -154,14 +161,18 @@ public class Menu {
     }
 
     private void getNewsByTopic() {
-        scanner = new Scanner(System.in);
-        System.out.println("\nEnter your desired topic:");
-        System.out.println("******************************************");
-        String topic = scanner.next().trim();
-        Language language = getLanguagePreference();
-        SortBy sortBy = getSortingPreference();
-        NewsResponse response = controller.getNews(topic, language, sortBy);
-        printResponse(response);
+        try {
+            scanner = new Scanner(System.in);
+            System.out.println("\nEnter your desired topic:");
+            System.out.println("******************************************");
+            String topic = scanner.next().trim();
+            Language language = getLanguagePreference();
+            SortBy sortBy = getSortingPreference();
+            NewsResponse response = controller.getNews(topic, language, sortBy);
+            printResponse(response);
+        } catch (NewsApiException e) {
+            System.out.println("Something went wrong ... " + e.getMessage());
+        }
     }
 
     private static void printExitMessage() {

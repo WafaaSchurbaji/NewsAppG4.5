@@ -2,6 +2,8 @@ package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.controller.AppController;
 import at.ac.fhcampuswien.entity.Article;
+import at.ac.fhcampuswien.entity.Source;
+import at.ac.fhcampuswien.exception.NewsApiException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -246,5 +248,37 @@ public class AppControllerTest {
         assertEquals(new ArrayList<>(), AppController.filterList("bitcoin", new ArrayList<>()));
     }
 
+    @Test
+    public void mostCommonSourceTest() throws NewsApiException {
+        List<Article> articles = new ArrayList<>();
+        Source source1 = new Source("source1", "source1");
+        Source source2 = new Source("source2", "source2");
+        Source source3 = new Source("source3", "source3");
+        Article article1 = new Article("article1", "article1");
+        article1.setSource(source1);
+        Article article2 = new Article("article2", "article2");
+        article2.setSource(source1);
+        Article article3 = new Article("article3", "article3");
+        article3.setSource(source1);
+        Article article4 = new Article("article4", "article4");
+        article4.setSource(source1);
+        Article article5 = new Article("article5", "article5");
+        article5.setSource(source1);
+        Article article6 = new Article("article6", "article6");
+        article6.setSource(source2);
+        Article article7 = new Article("article7", "article7");
+        article7.setSource(source3);
+
+        articles.add(article1);
+        articles.add(article2);
+        articles.add(article3);
+        articles.add(article4);
+        articles.add(article5);
+        articles.add(article6);
+        articles.add(article7);
+        String expected = source1.getName();
+        String actual = appController.getMostSource(articles);
+        assertEquals(expected.toLowerCase(), actual.toLowerCase());
+    }
 
 }

@@ -4,12 +4,14 @@ import at.ac.fhcampuswien.api.NewsApi;
 import at.ac.fhcampuswien.api.NewsResponse;
 import at.ac.fhcampuswien.api.UrlProperties;
 import at.ac.fhcampuswien.entity.Article;
+import at.ac.fhcampuswien.exception.NewsApiException;
 import at.ac.fhcampuswien.properties.*;
 import com.github.javafaker.Faker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class AppController {
     private List<Article> articles;
@@ -21,14 +23,14 @@ public class AppController {
         articles = newsarticle;
     }
 
-    public NewsResponse getTopHeadLines(Category category, Country country) {
+    public NewsResponse getTopHeadLines(Category category, Country country) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.TOP_HEADLINES);
         urlProperties.setCountry(country);
         urlProperties.setCategory(category);
         return NewsApi.getNews(urlProperties);
     }
 
-    public NewsResponse getAllNewsBitcoin(Language language, SortBy sortBy) {
+    public NewsResponse getAllNewsBitcoin(Language language, SortBy sortBy) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.EVERYTHING);
         urlProperties.setQuery("+Bitcoin");
         urlProperties.setLanguage(language);
@@ -36,7 +38,7 @@ public class AppController {
         return NewsApi.getNews(urlProperties);
     }
 
-    public NewsResponse getNews(String topic, Language language, SortBy sortBy) {
+    public NewsResponse getNews(String topic, Language language, SortBy sortBy) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.EVERYTHING);
         urlProperties.setQuery(topic);
         urlProperties.setLanguage(language);
@@ -44,6 +46,18 @@ public class AppController {
         return NewsApi.getNews(urlProperties);
     }
 
+    public String getMostSource(Collection<Article> articles) throws NewsApiException {
+        Optional<Map.Entry<String, Long>> max = articles.stream()
+                .map(article -> article.getSource().getName())
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .max(Map.Entry.comparingByValue());
+        if (max.isPresent())
+            return max.get().getKey();
+        else
+            throw new NewsApiException("No most common source could be determined!");
+    }
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
