@@ -83,7 +83,7 @@ public class AppController {
 
     }
 
-    public long getDescriptionLength(Collection<Article> articles) throws NewsApiException {
+    public List<String> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
         List<String> descr = articles.stream().map(Article::getDescription)
                 .sorted(Comparator.comparingInt(String::length))
                 .toList();
@@ -92,7 +92,7 @@ public class AppController {
             throw new NewsApiException("No Article contain description");
         }
         else {
-            return descr.stream().count();
+            return descr;
         }
     }
 
