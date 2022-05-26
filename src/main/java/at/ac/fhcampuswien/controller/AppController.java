@@ -59,6 +59,54 @@ public class AppController {
             throw new NewsApiException("No most common source could be determined!");
     }
 
+    public String getAuthorWithLongestName(Collection<Article> articles) throws NewsApiException {
+        Optional<String> longName = articles.stream()
+                //.filter(article -> article.getAuthor().length())
+                .max(Comparator.comparing(Article::getAuthor)).map(Article::getAuthor);
+        if (longName.isPresent())
+            return longName.get();
+        else {
+            throw new NewsApiException("Their is no author with longest name");
+        }
+    }
+
+    public long getArticleFromNewYorkTimes(Collection<Article> articles) throws NewsApiException {
+        String a = "New York Times";
+        long fromNYT = articles.stream()
+                .map(Article::getSource)
+                .filter(source -> source.equals(a)).count();
+        if (fromNYT != 0)
+            return fromNYT;
+        else {
+            throw new NewsApiException("No Article from New York Times");
+        }
+
+    }
+
+    public long getDescriptionLength(Collection<Article> articles) throws NewsApiException {
+        List<String> descr = articles.stream().map(Article::getDescription)
+                .sorted(Comparator.comparingInt(String::length))
+                .toList();
+
+        if (descr.isEmpty()) {
+            throw new NewsApiException("No Article contain description");
+        }
+        else {
+            return descr.stream().count();
+        }
+    }
+
+    public List<Article> getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
+        List<Article> shortTitle = articles.stream()
+                .filter(article -> article.getTitle().length() < 15).collect(Collectors.toList());
+        if (shortTitle.isEmpty()) {
+            throw new NewsApiException("No article with title length less than 15 character");
+        }
+        else {
+            return shortTitle;
+        }
+    }
+
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
