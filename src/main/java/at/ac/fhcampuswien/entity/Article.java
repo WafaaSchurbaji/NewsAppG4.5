@@ -101,13 +101,6 @@ public class Article {
         if (!StringUtils.isBlank(getTitle())) {
             stringBuilder.append("Title: ").append(getTitle()).append(System.getProperty("line.separator"));
         }
-        try {
-            if (getDescriptionLength()!= 0) {
-                stringBuilder.append("Description: ").append(getDescriptionLength()).append(System.getProperty("line.separator"));
-            }
-        } catch (NewsApiException e) {
-            throw new RuntimeException(e);
-        }
         if (!StringUtils.isBlank(getDescription())) {
             stringBuilder.append("Description: ").append(getDescription()).append(System.getProperty("line.separator"));
         }
