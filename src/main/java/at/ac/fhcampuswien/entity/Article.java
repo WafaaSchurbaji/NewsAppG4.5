@@ -36,6 +36,12 @@ public class Article {
     public String getAuthor() {
         return author;
     }
+    public int getAuthorLength(){
+        if(author!=null)
+          return author.length();
+
+        return 0;
+    }
 
 
     public String getTitle() {
@@ -76,6 +82,7 @@ public class Article {
     public Source getSource() {
         return this.source;
     }
+
 
 
     @Override

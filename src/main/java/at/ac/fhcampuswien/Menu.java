@@ -95,8 +95,8 @@ public class Menu {
         System.out.println("\nResponse Status: " + response.getStatus());
         System.out.println("Articles count: " + response.getTotalResults());
         System.out.println("Most Sources: " + response.getMostSource(response.getArticles()));
-        //System.out.println("Author with longest name:" + response.getAuthorWithLongestName(response.getArticles()));
-        //System.out.println("NYT: " +controller.printAmountNYTArticles());
+        System.out.println("Author with longest name:" + response.getAuthorWithLongestName(response.getArticles()));
+        System.out.println("NYT: " +response.getArticleFromNewYorkTimes(response.getArticles()));
         System.out.println("***********************************************************************************************************************\n\n");
         for (Article article : response.getArticles()) {
             System.out.println(article.toString());

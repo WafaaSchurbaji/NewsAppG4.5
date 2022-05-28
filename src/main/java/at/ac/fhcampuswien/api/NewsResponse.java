@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class NewsResponse {
+
     private String status;
     private int totalResults;
     private List<Article> articles;
@@ -34,6 +35,14 @@ public class NewsResponse {
             throw new NewsApiException("There is no author with longest name");
         }
     }*/
+    public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
+        String a = "New York Times";
+        return articles.stream()
+                .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
+
+    }
+
+
     public String getMostSource(Collection<Article> articles) throws NewsApiException {
         Optional<Map.Entry<String, Long>> max = articles.stream()
                 .map(article -> article.getSource().getName())
@@ -46,7 +55,17 @@ public class NewsResponse {
         else
             throw new NewsApiException("No most common source could be determined!");
     }
+    public String getAuthorWithLongestName(Collection<Article> articles)throws NewsApiException{
+        Optional<Article> authorName =articles.stream()
+                // .map(Article::getAuthorLength)
+                .max(Comparator.comparingInt(Article::getAuthorLength));
+        if (authorName.isPresent())
+            return authorName.get().getAuthor();
+        else
+
+            throw new NewsApiException("No author with longest name");
+
+}}
 
 
 
-}
