@@ -280,5 +280,19 @@ public class AppControllerTest {
         String actual = appController.getMostSource(articles);
         assertEquals(expected.toLowerCase(), actual.toLowerCase());
     }
+    @Test
+    public void getAuthorWithLongestNameTest1() throws NewsApiException {
+        List<Article> list = new ArrayList<>();
+        Article article1 = new Article("kurier.at", "Lamborghini: Mit Vollgas durch alle Krisen | kurier.at - KURIER");
+        list.add(article1);
+        Article article2 = new Article("finanzen.net Redaktion", "Bitcoin, Ether & Co: So schlagen sich die Kryptokurse am Nachmittag ");
+        list.add(article2);
+        list.add(new Article("Importer", "DAMAC Properties mit Sitz in Dubai st��t in den US-Immobilienmarkt vor - mit ultra-luxuri�sen Eigentumswohnungen der Marke CAVALLI in Miami "));
+        list.add(new Article("Motorsport-Total.com", "Maserati MC20 Cielo (2022) deb�tiert mit 630 PS und ohne Dach "));
+        list.add(new Article("Motorradmagazin", " Der elektrische Tourer Neue Energica Experia"));
+        String expected = article2.getAuthor();
+        String actual = appController.getAuthorWithLongestName(list);
+        assertEquals(expected, actual);
+    }
 
 }
