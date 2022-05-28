@@ -59,18 +59,19 @@ public class AppController {
             throw new NewsApiException("No most common source could be determined!");
     }
 
-    public String getAuthorWithLongestName(Collection<Article> articles) throws NewsApiException {
+    public String getAuthorWithLongestName() throws NewsApiException{
         Optional<String> longName = articles.stream()
                 //.filter(article -> article.getAuthor().length())
                 .max(Comparator.comparing(Article::getAuthor)).map(Article::getAuthor);
-        if (longName.isPresent())
+        if (longName.isPresent()) {
             return longName.get();
-        else {
-            throw new NewsApiException("Their is no author with longest name");
+        }
+        else{
+            throw new NewsApiException("No Author with a longest name");
         }
     }
 
-    public long getArticleFromNewYorkTimes(Collection<Article> articles) throws NewsApiException {
+    /*public long getArticleFromNewYorkTimes(Collection<Article> articles) throws NewsApiException {
         String a = "New York Times";
         long fromNYT = articles.stream()
                 .map(Article::getSource)
@@ -81,7 +82,7 @@ public class AppController {
             throw new NewsApiException("No Article from New York Times");
         }
 
-    }
+    }*/
 
     public List<String> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
         List<String> descr = articles.stream().map(Article::getDescription)
