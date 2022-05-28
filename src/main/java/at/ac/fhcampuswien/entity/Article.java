@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.entity;
 
+import at.ac.fhcampuswien.exception.NewsApiException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
@@ -36,12 +37,20 @@ public class Article {
         return author;
     }
 
+
     public String getTitle() {
         return title;
     }
 
     public String getDescription() {
         return description;
+    }
+    public int getDescriptionLength() throws NewsApiException{
+        try {
+            return description.length();
+        }catch (Exception exception) {
+            throw new NewsApiException("No description given");
+        }
     }
 
     public String getUrl() {
@@ -68,6 +77,7 @@ public class Article {
         return this.source;
     }
 
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -83,6 +93,13 @@ public class Article {
         }
         if (!StringUtils.isBlank(getTitle())) {
             stringBuilder.append("Title: ").append(getTitle()).append(System.getProperty("line.separator"));
+        }
+        try {
+            if (getDescriptionLength()!= 0) {
+                stringBuilder.append("Description: ").append(getDescriptionLength()).append(System.getProperty("line.separator"));
+            }
+        } catch (NewsApiException e) {
+            throw new RuntimeException(e);
         }
         if (!StringUtils.isBlank(getDescription())) {
             stringBuilder.append("Description: ").append(getDescription()).append(System.getProperty("line.separator"));
