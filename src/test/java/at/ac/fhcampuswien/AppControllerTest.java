@@ -287,12 +287,15 @@ public class AppControllerTest {
         list.add(article1);
         Article article2 = new Article("finanzen.net Redaktion", "Bitcoin, Ether & Co: So schlagen sich die Kryptokurse am Nachmittag ");
         list.add(article2);
-        list.add(new Article("Importer", "DAMAC Properties mit Sitz in Dubai st��t in den US-Immobilienmarkt vor - mit ultra-luxuri�sen Eigentumswohnungen der Marke CAVALLI in Miami "));
-        list.add(new Article("Motorsport-Total.com", "Maserati MC20 Cielo (2022) deb�tiert mit 630 PS und ohne Dach "));
+        list.add(new Article("Andreas Anzenberger", " Neues AMA-Gütesiegel für Tierwohl soll Exporte sichern "));
+        list.add(new Article("Curtis", "Title: Globaler Kohlen aushöhlen Markt Wachsende Nachfrage nach großen Wettbewerbern und Strategieanalysen bis 2031 "));
         list.add(new Article("Motorradmagazin", " Der elektrische Tourer Neue Energica Experia"));
         String expected = article2.getAuthor();
         String actual = appController.getAuthorWithLongestName(list);
         assertEquals(expected, actual);
     }
+
+
+
 
 }
