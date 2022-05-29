@@ -51,11 +51,13 @@ public class Article {
     public String getDescription() {
         return description;
     }
-    public int getDescriptionLength() {
-
+    public int getDescriptionLength(){
+      try {
             return description.length();
-
-
+      }catch (NullPointerException e) {
+          System.out.println(e.getMessage());;
+        }
+        return description.length();
     }
 
     public String getUrl() {
@@ -101,10 +103,15 @@ public class Article {
         }
         if (!StringUtils.isBlank(getDescription())) {
 
+            stringBuilder.append("Description (Length): ").append(getDescriptionLength()).append(System.getProperty("line.separator"));
+
+           /*try {
                 stringBuilder.append("Description (Length): ").append(getDescriptionLength()).append(System.getProperty("line.separator"));
-            }
+            } catch (NewsApiException e) {
+                System.out.println("Description length cannot be found ");
+            }*/
 
-
+        }
         if (!StringUtils.isBlank(getDescription())) {
             stringBuilder.append("Description: ").append(getDescription()).append(System.getProperty("line.separator"));
         }
