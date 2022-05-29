@@ -51,12 +51,11 @@ public class Article {
     public String getDescription() {
         return description;
     }
-    public int getDescriptionLength() throws NewsApiException{
-        try {
+    public int getDescriptionLength() {
+
             return description.length();
-        }catch (Exception exception) {
-            throw new NewsApiException("No description given");
-        }
+
+
     }
 
     public String getUrl() {
@@ -102,13 +101,10 @@ public class Article {
         }
         if (!StringUtils.isBlank(getDescription())) {
 
-            try {
                 stringBuilder.append("Description (Length): ").append(getDescriptionLength()).append(System.getProperty("line.separator"));
-            } catch (NewsApiException e) {
-                System.out.println("Description length cannot be found ");
             }
 
-        }
+
         if (!StringUtils.isBlank(getDescription())) {
             stringBuilder.append("Description: ").append(getDescription()).append(System.getProperty("line.separator"));
         }

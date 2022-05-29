@@ -80,16 +80,17 @@ public class AppController {
 
 
 
-    public List<String> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
-        List<String> descr = articles.stream().map(Article::getDescription)
-                .sorted(Comparator.comparingInt(String::length))
-                .toList();
+    public List<Article> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
+        Comparator<Article > sortDescriptionByLengthThenAlphabet = Comparator.comparingInt(Article::getDescriptionLength).thenComparing(Article::getDescription);
+        List<Article> sortedByDec = articles.stream()
+                .sorted(sortDescriptionByLengthThenAlphabet)
+                .collect(Collectors.toList());
 
-        if (descr.isEmpty()) {
+        if (sortedByDec.isEmpty()) {
             throw new NewsApiException("No Article contain description");
         }
         else {
-            return descr;
+            return sortedByDec;
         }
     }
 
