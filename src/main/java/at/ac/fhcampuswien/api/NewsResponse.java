@@ -25,7 +25,14 @@ public class NewsResponse {
         return articles;
     }
 
+    public List<Article> printHeadlinesUnder15(Collection<Article> articles){
 
+        return articles.stream()
+                .filter(article -> article.getTitle()
+                        .length() < 15).collect(Collectors.toList());
+        //return new ArrayList<>();
+
+    }
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
         String a = "New York Times";
         return articles.stream()
