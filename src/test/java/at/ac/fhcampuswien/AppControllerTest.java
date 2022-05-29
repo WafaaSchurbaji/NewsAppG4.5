@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -281,6 +282,7 @@ public class AppControllerTest {
         assertEquals(expected.toLowerCase(), actual.toLowerCase());
     }
     @Test
+    @DisplayName("The Article should be sorted by the longest author name")
     public void getAuthorWithLongestNameTest1() throws NewsApiException {
         List<Article> list = new ArrayList<>();
         Article article1 = new Article("kurier.at", "Lamborghini: Mit Vollgas durch alle Krisen | kurier.at - KURIER");
@@ -293,9 +295,25 @@ public class AppControllerTest {
         String expected = article2.getAuthor();
         String actual = appController.getAuthorWithLongestName(list);
         assertEquals(expected, actual);
+        assertNotEquals(article1.getAuthor(),actual);
     }
 
 
-
+    @Test
+    @DisplayName("sort the article in ascending order by length of the Description")
+    public void getDescriptionByLengthTest1() throws NewsApiException{
+        List<Article> list = new ArrayList<>();
+        Article article1 = new Article("Motorradmagazin", " Der elektrische Tourer Neue Energica Experia","3.290 Fertighäuser sind 2021 in Österreich errichtet worden");
+        list.add(article1);
+        Article article2 = new Article("finanzen.net Redaktion", "Bitcoin, Ether & Co: So schlagen sich die Kryptokurse am Nachmittag ","Bitcoin, Ether & Co: So schlagen sich die Kryptowährungen am Sonntagvormittag");
+        list.add(article2);
+        list.add(new Article("Andreas Anzenberger", " Neues AMA-Gütesiegel für Tierwohl soll Exporte sichern ","Der jüngste Bier-Guide listet erneut die besten Lokale für Süffiges in Österreich auf."));
+        Article article3 = new Article("Curtis", "Title: Globaler Kohlen aushöhlen Markt Wachsende Nachfrage nach großen Wettbewerbern und Strategieanalysen bis 2031 "," Die Großpetersdorfer Westernstadt Lucky Town startete mit praktisch vollem Haus in die mittlerweile 26.");
+        list.add(article3);
+        Article article4 =new Article("kurier.at", "Lamborghini"," Der Ukraine-Krieg verändert die Kärntner Landwirtschaft. Agrarprodukte sind zum einen gefragt wie noch nie");
+        list.add(article4);
+        List<Article> actual = appController.getDescriptionByLength(list);
+        assertEquals(list.stream().toList(), actual);
+    }
 
 }

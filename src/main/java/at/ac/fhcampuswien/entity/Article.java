@@ -22,6 +22,12 @@ public class Article {
         this.title = title;
     }
 
+    public Article(String author, String title, String description) {
+        this.author = author;
+        this.title = title;
+        this.description = description;
+    }
+
     //Second Constructor
     public Article(String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
         this.author = author;
@@ -51,15 +57,7 @@ public class Article {
     public String getDescription() {
         return description;
     }
-    /* public int getDescriptionLength()throws NewsApiException {
-        try {
-            return description.length();
-        } catch (Exception e) {
-            throw new NewsApiException("No description");
 
-        }
-
-    }*/
    public int getDescriptionLength(){
       if(description != null)
             return description.length();
