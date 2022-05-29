@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.entity;
 
-import at.ac.fhcampuswien.exception.NewsApiException;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
@@ -51,13 +51,20 @@ public class Article {
     public String getDescription() {
         return description;
     }
-    public int getDescriptionLength(){
-      try {
+    /* public int getDescriptionLength()throws NewsApiException {
+        try {
             return description.length();
-      }catch (NullPointerException e) {
-          System.out.println(e.getMessage());;
+        } catch (Exception e) {
+            throw new NewsApiException("No description");
+
         }
-        return description.length();
+
+    }*/
+   public int getDescriptionLength(){
+      if(description != null)
+            return description.length();
+
+        return 0;
     }
 
     public String getUrl() {
@@ -120,6 +127,9 @@ public class Article {
         }
         if (!StringUtils.isBlank(getUrl())) {
             stringBuilder.append("URL: ").append(getUrl()).append(System.getProperty("line.separator"));
+        }
+        if (!StringUtils.isBlank(getUrlToImage())) {
+            stringBuilder.append("Image: ").append(getUrlToImage()).append(System.getProperty("line.separator"));
         }
         return stringBuilder.toString();
     }

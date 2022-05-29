@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class Menu {
     private final AppController controller = new AppController();
+
     private static final String INVALID_USER_INPUT_MESSAGE = "\nInvalid Input\n";
     private static final String EXIT_MESSAGE = "Bye Bye";
     private Scanner scanner = new Scanner(System.in);
@@ -91,6 +92,7 @@ public class Menu {
         return Country.DEFAULT;
     }
 
+
     private void printResponse(NewsResponse response) throws NewsApiException{
         System.out.println("\nResponse Status: " + response.getStatus());
         System.out.println("Articles count: " + response.getTotalResults());
@@ -98,7 +100,7 @@ public class Menu {
         System.out.println("Author with longest name:" + response.getAuthorWithLongestName(response.getArticles()));
         System.out.println("NYT: " +response.getArticleFromNewYorkTimes(response.getArticles()));
         System.out.println("***********************************************************************************************************************\n\n");
-        for (Article article : response.getArticles()) {
+        for (Article article : response.getDescriptionByLength(response.getArticles())) {
             System.out.println(article.toString());
             System.out.println("***********************************************************************************************************************\n\n");
         }
@@ -118,6 +120,9 @@ public class Menu {
         }
     }
 
+
+
+
     private SortBy getSortingPreference() {
         System.out.println("\nChoose from the following to sort by it:");
         System.out.println("******************************************");
@@ -132,6 +137,7 @@ public class Menu {
             printInvalidInputMessage();
             getSortingPreference();
         }
+
         return SortBy.DEFAULT;
     }
 

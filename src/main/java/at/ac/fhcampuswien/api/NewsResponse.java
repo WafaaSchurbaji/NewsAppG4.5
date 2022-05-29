@@ -25,20 +25,11 @@ public class NewsResponse {
         return articles;
     }
 
-    /*public String getAuthorWithLongestName(Collection<Article> articles) throws NewsApiException {
-        Optional<String> longName = Optional.ofNullable(articles.stream()
-                .max(Comparator.comparing(article -> article.getAuthor().length()))
-                .get().getAuthor());
-        if (longName.isPresent())
-            return longName.get();
-        else {
-            throw new NewsApiException("There is no author with longest name");
-        }
-    }*/
+
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
         String a = "New York Times";
         return articles.stream()
-                .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
+                .filter(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
 
     }
 
@@ -57,7 +48,6 @@ public class NewsResponse {
     }
     public String getAuthorWithLongestName(Collection<Article> articles)throws NewsApiException{
         Optional<Article> authorName =articles.stream()
-                // .map(Article::getAuthorLength)
                 .max(Comparator.comparingInt(Article::getAuthorLength));
         if (authorName.isPresent())
             return authorName.get().getAuthor();
@@ -65,7 +55,15 @@ public class NewsResponse {
 
             throw new NewsApiException("No author with longest name");
 
-}}
+}
+public List<Article> getDescriptionByLength(Collection<Article> articles)  {
+        Comparator<Article > sortDescriptionByLengthThenAlphabet = Comparator.comparingInt(Article::getDescriptionLength).thenComparing(Article::getDescription);
+    return articles.stream()
+            .sorted(sortDescriptionByLengthThenAlphabet)
+            .collect(Collectors.toList());
+
+    }
+}
 
 
 

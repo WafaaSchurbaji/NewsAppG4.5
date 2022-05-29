@@ -4,6 +4,7 @@ public enum SortBy implements ApiProperties {
     RELEVANCY("relevancy"),// articles more closely related to q come first
     POPULARITY("popularity"),//articles from popular sources and publishers come first.
     PUBLISHED_AT("publishedAt"),//newest articles come first.
+
     DEFAULT("");//publishedAt
 
     private final String value;
@@ -16,4 +17,5 @@ public enum SortBy implements ApiProperties {
     public String getValue() {
         return this.value;
     }
+
 }
