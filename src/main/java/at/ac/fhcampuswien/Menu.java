@@ -99,7 +99,7 @@ public class Menu {
         System.out.println("Most Sources: " + response.getMostSource(response.getArticles()));
         System.out.println("Author with longest name:" + response.getAuthorWithLongestName(response.getArticles()));
         System.out.println("NYT: " +response.getArticleFromNewYorkTimes(response.getArticles()));
-        System.out.println("Under 15: \n" + response.printHeadlinesUnder15(response.getArticles()).toString());
+        System.out.println("Under 15 characters headlines: \n" + response.printHeadlinesUnder15(response.getArticles()).toString());
 
         System.out.println("***********************************************************************************************************************\n\n");
         for (Article article : response.getDescriptionByLength(response.getArticles())) {
