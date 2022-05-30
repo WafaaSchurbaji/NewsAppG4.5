@@ -69,14 +69,11 @@ public class AppController {
              throw new NewsApiException("No author with longest name");
     }
 
-    public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
+    public long getArticleFromNewYorkTimes(Collection<Article> articles){
           String a = "New York Times";
         return articles.stream()
         .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
-
-        }
-
-
+    }
 
     public List<Article> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
         Comparator<Article > sortDescriptionByLengthThenAlphabet = Comparator.comparingInt(Article::getDescriptionLength).thenComparing(Article::getDescription);
@@ -90,7 +87,7 @@ public class AppController {
             return sortedByDec;
         }
     }
-
+/*
     public List<Article> getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
         List<Article> shortTitle = articles.stream()
                 .filter(article -> article.getTitle().length() < 15).collect(Collectors.toList());
@@ -101,7 +98,17 @@ public class AppController {
             return shortTitle;
         }
     }
+*/
 
+    public String getArticleWithShortTitle(Collection<Article> articles)throws NewsApiException{
+        Optional<Article> title =articles.stream()
+                .min(Comparator.comparingInt(Article::getTitleLength));
+        if (title.isPresent())
+            return title.get().getTitle();
+        else
+
+            throw new NewsApiException("No author with shortest Title");
+    }
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }

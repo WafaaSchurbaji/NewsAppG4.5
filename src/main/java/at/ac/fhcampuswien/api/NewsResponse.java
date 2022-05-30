@@ -39,7 +39,6 @@ public class NewsResponse {
                 .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
     }
 
-
     public String getMostSource(Collection<Article> articles) throws NewsApiException {
         Optional<Map.Entry<String, Long>> max = articles.stream()
                 .map(article -> article.getSource().getName())

@@ -315,5 +315,53 @@ public class AppControllerTest {
         List<Article> actual = appController.getDescriptionByLength(list);
         assertEquals(list.stream().toList(), actual);
     }
+    @Test
+    @DisplayName("The Article should be sorted by the shortest Title")
+    public void getArticleWithShortTitleTest1()throws NewsApiException{
+        List<Article> list = new ArrayList<>();
+        Article article1 = new Article("Motorradmagazin", " Der elektrische Tourer Neue Energica Experia","3.290 Fertighäuser sind 2021 in Österreich errichtet worden");
+        list.add(article1);
+        Article article2 = new Article("finanzen.net Redaktion", "Bitcoin, Ether & Co: So schlagen sich die Kryptokurse am Nachmittag ","Bitcoin, Ether & Co: So schlagen sich die Kryptowährungen am Sonntagvormittag");
+        list.add(article2);
+        list.add(new Article("Andreas Anzenberger", " Neues AMA-Gütesiegel für Tierwohl soll Exporte sichern ","Der jüngste Bier-Guide listet erneut die besten Lokale für Süffiges in Österreich auf."));
+        Article article3 =new Article("kurier.at", "Lamborghini"," Der Ukraine-Krieg verändert die Kärntner Landwirtschaft. Agrarprodukte sind zum einen gefragt wie noch nie");
+        list.add(article3);
+        Article article4 = new Article("Curtis", "Title: Globaler Kohlen aushöhlen Markt Wachsende Nachfrage nach großen Wettbewerbern und Strategieanalysen bis 2031 "," Die Großpetersdorfer Westernstadt Lucky Town startete mit praktisch vollem Haus in die mittlerweile 26.");
+        list.add(article4);
+        String expected = article3.getTitle();
+        String actual = appController.getArticleWithShortTitle(list);
+        assertEquals(expected, actual);
+        assertNotEquals(article1.getAuthor(),actual);
+    }
+
+    @Test
+    @DisplayName("Article should be from Source New York Times")
+    public void getArticleFromNewYorkTimesTest1()throws NewsApiException{
+        Source source1 = new Source("New York Times", "New York Times");
+        Source source2 = new Source("BBC", "BBC");
+        Source source3 = new Source("source3", "source3");
+        List<Article> list = new ArrayList<>();
+        Article article1 = new Article("Chelsia Rose Marcius", " Adams Defends Police for Handcuffing Vendor Who Sold Mangoes in Subway");
+        list.add(article1);
+        article1.setSource(source1);
+        Article article2 = new Article("Jan Ransom, Jonah E. Bromwich and Anne Barnard", "Rikers Island Faces Pressure to End Death and Disorder Crisis");
+        list.add(article1);
+        article2.setSource(source1);
+        Article article3 =new Article("kurier.at", "Lamborghini");
+        list.add(article3);
+        article3.setSource(source2);
+        Article article4 = new Article("Curtis", "Title: Globaler Kohlen aushöhlen Markt Wachsende Nachfrage nach großen Wettbewerbern und Strategieanalysen bis 2031 ");
+        list.add(article4);
+        article4.setSource(source2);
+        Article article5=new Article("Andreas Anzenberger", " Neues AMA-Gütesiegel für Tierwohl soll Exporte sichern ");
+        list.add(article5);
+        article5.setSource(source3);
+        assertNotEquals(3,appController.getArticleFromNewYorkTimes(list));
+
+    }
+
+
+
+
 
 }
