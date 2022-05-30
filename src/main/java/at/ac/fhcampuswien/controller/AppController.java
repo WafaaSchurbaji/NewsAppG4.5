@@ -61,7 +61,6 @@ public class AppController {
 
     public String getAuthorWithLongestName(Collection<Article> articles)throws NewsApiException{
      Optional<Article> authorName =articles.stream()
-           // .map(Article::getAuthorLength)
              .max(Comparator.comparingInt(Article::getAuthorLength));
      if (authorName.isPresent())
      return authorName.get().getAuthor();
@@ -85,8 +84,7 @@ public class AppController {
         List<Article> sortedByDec = articles.stream()
                 .sorted(sortDescriptionByLengthThenAlphabet)
                 .collect(Collectors.toList());
-
-        if (sortedByDec.isEmpty()) {
+    if (sortedByDec.isEmpty()) {
             throw new NewsApiException("No Article contain description");
         }
         else {

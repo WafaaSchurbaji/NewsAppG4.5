@@ -29,8 +29,7 @@ public class NewsResponse {
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
         String a = "New York Times";
         return articles.stream()
-                .filter(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
-
+                .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
     }
 
 
@@ -56,14 +55,28 @@ public class NewsResponse {
             throw new NewsApiException("No author with longest name");
 
 }
+
 public List<Article> getDescriptionByLength(Collection<Article> articles)  {
         Comparator<Article > sortDescriptionByLengthThenAlphabet = Comparator.comparingInt(Article::getDescriptionLength).thenComparing(Article::getDescription);
     return articles.stream()
             .sorted(sortDescriptionByLengthThenAlphabet)
             .collect(Collectors.toList());
+    }
+
+
+    public String getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
+        Optional<Article> titleName =articles.stream()
+                .min(Comparator.comparingInt(Article::getTitleLength));
+        if (titleName.isPresent())
+            return titleName.get().getTitle();
+        else
+
+            throw new NewsApiException("No author with shortest Title");
 
     }
+
 }
+
 
 
 

@@ -48,10 +48,14 @@ public class Article {
 
         return 0;
     }
-
-
     public String getTitle() {
         return title;
+    }
+    public int getTitleLength(){
+        if(title!=null)
+            return title.length();
+
+        return 0;
     }
 
     public String getDescription() {

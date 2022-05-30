@@ -11,6 +11,7 @@ import at.ac.fhcampuswien.properties.SortBy;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,7 @@ public class Menu {
         start();
     }
 
-    //code from Nisad
+
     private void getTopHeadlines() {
         try {
             printCategoryOptions();
@@ -63,7 +64,7 @@ public class Menu {
         }
     }
 
-    //code from Nisad
+
     private void printCategoryOptions() {
         System.out.println("\nChoose from the following categories");
         System.out.println("******************************************");
@@ -97,16 +98,16 @@ public class Menu {
         System.out.println("\nResponse Status: " + response.getStatus());
         System.out.println("Articles count: " + response.getTotalResults());
         System.out.println("Most Sources: " + response.getMostSource(response.getArticles()));
-        System.out.println("Author with longest name:" + response.getAuthorWithLongestName(response.getArticles()));
+        System.out.println("Author with longest name: " + response.getAuthorWithLongestName(response.getArticles()));
         System.out.println("NYT: " +response.getArticleFromNewYorkTimes(response.getArticles()));
+        System.out.println("Author with shortest Title: " + response.getArticleWithShortTitle(response.getArticles()));
         System.out.println("***********************************************************************************************************************\n\n");
-        for (Article article : response.getDescriptionByLength(response.getArticles())) {
+        for (Article article :response.getDescriptionByLength(response.getArticles())){
             System.out.println(article.toString());
             System.out.println("***********************************************************************************************************************\n\n");
         }
 
     }
-
 
     //
     private void getAllNewsBitcoin() {
@@ -144,7 +145,7 @@ public class Menu {
     /**
      * enum elements in a stream array
      */
-    //Code from Glory
+
     private Language getLanguagePreference() {
         String languages = Arrays.stream(Language.values())
                 .map(Language::getValue)
