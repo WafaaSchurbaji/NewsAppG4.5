@@ -67,7 +67,6 @@ public class AppController {
      else
 
              throw new NewsApiException("No author with longest name");
-
     }
 
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {

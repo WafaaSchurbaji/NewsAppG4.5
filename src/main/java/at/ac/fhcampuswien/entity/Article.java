@@ -54,7 +54,6 @@ public class Article {
     public int getTitleLength(){
         if(title!=null)
             return title.length();
-
         return 0;
     }
 

@@ -121,9 +121,6 @@ public class Menu {
         }
     }
 
-
-
-
     private SortBy getSortingPreference() {
         System.out.println("\nChoose from the following to sort by it:");
         System.out.println("******************************************");
