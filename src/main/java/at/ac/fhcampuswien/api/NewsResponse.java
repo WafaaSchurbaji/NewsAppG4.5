@@ -36,7 +36,7 @@ public class NewsResponse {
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
         String a = "New York Times";
         return articles.stream()
-                .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
+                .filter(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
     }
 
     public String getMostSource(Collection<Article> articles) throws NewsApiException {
@@ -72,12 +72,13 @@ public List<Article> getDescriptionByLength(Collection<Article> articles)  {
 
     public String getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
         Optional<Article> titleName =articles.stream()
+                .filter(article -> article.getTitle().length() < 15)
                 .min(Comparator.comparingInt(Article::getTitleLength));
         if (titleName.isPresent())
             return titleName.get().getTitle();
         else
 
-            throw new NewsApiException("No author with shortest Title");
+            throw new NewsApiException("No article with shortest Title");
 
     }
 
