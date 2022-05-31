@@ -11,6 +11,7 @@ import at.ac.fhcampuswien.properties.SortBy;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -95,19 +96,27 @@ public class Menu {
 
 
     private void printResponse(NewsResponse response) throws NewsApiException{
+        Collection<Article> articleCollection =response.getArticles();
+
         System.out.println("\nResponse Status: " + response.getStatus());
         System.out.println("Articles count: " + response.getTotalResults());
-        System.out.println("Most Sources: " + response.getMostSource(response.getArticles()));
-        System.out.println("Author with longest name: " + response.getAuthorWithLongestName(response.getArticles()));
-        System.out.println("Article from New York Time: " +response.getArticleFromNewYorkTimes(response.getArticles()));
-        System.out.println("Author with shortest Title: " + response.getArticleWithShortTitle(response.getArticles()));
+        System.out.println("Most Sources: " + response.getMostSource(articleCollection));
+        System.out.println("Author with longest name: " + response.getAuthorWithLongestName(articleCollection));
+        System.out.println("Article from New York Time: " +response.getArticleFromNewYorkTimes(articleCollection));
         System.out.println("***********************************************************************************************************************\n\n");
-        for (Article article :response.getDescriptionByLength(response.getArticles())){
+
+        for (Article article :response.getDescriptionByLength(articleCollection)){
             System.out.println(article.toString());
             System.out.println("***********************************************************************************************************************\n\n");
         }
+        System.out.println("Article with shortest Title: ");
+        for (Article title:response.getArticleWithShortTitle(articleCollection)){
+            System.out.println(title.toString());
+        System.out.println("**************************************Article with shortest Title:***************************************************************\n\n");
 
-    }
+    }}
+
+
 
     //
     private void getAllNewsBitcoin() {

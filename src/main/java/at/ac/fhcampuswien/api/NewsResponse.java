@@ -25,7 +25,7 @@ public class NewsResponse {
         return articles;
     }
 
-    public List<Article> printHeadlinesUnder15(Collection<Article> articles){
+    /*public List<Article> printHeadlinesUnder15(Collection<Article> articles){
 
         return articles.stream()
                 .filter(article -> article.getTitle()
@@ -33,6 +33,8 @@ public class NewsResponse {
         //return new ArrayList<>();
 
     }
+    */
+
     public long getArticleFromNewYorkTimes(Collection<Article> articles)  {
         String a = "New York Times";
         return articles.stream()
@@ -70,15 +72,16 @@ public List<Article> getDescriptionByLength(Collection<Article> articles)  {
     }
 
 
-    public String getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
-        Optional<Article> titleName =articles.stream()
-                .filter(article -> article.getTitle().length() < 15)
-                .min(Comparator.comparingInt(Article::getTitleLength));
-        if (titleName.isPresent())
-            return titleName.get().getTitle();
-        else
+    public List<Article> getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
+       List <Article> titleName = articles.stream()
+               .filter(article -> article.getTitle().length() < 15).toList();
+        if (titleName.isEmpty())throw new NewsApiException("No article with shortest Title");
 
-            throw new NewsApiException("No article with shortest Title");
+
+        return titleName;
+        //give just the title
+                //.stream().map(Article::getTitle)
+                //.collect(Collectors.joining(System.lineSeparator()));
 
     }
 
