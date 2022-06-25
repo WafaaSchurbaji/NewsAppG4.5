@@ -29,7 +29,7 @@ public class Article {
     }
 
     //Second Constructor
-    public Article(String author, String title, String description, String url, String urlToImage, String publishedAt, String content) {
+    public Article(String author, String title, String description, String url, String urlToImage, String publishedAt, String content, Source source) {
         this.author = author;
         this.title = title;
         this.description = description;
@@ -37,6 +37,7 @@ public class Article {
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
+        this.source = source;
     }
 
     public String getAuthor() {
@@ -138,5 +139,67 @@ public class Article {
     public int hashCode() {
         return Objects.hash(getAuthor(), getTitle());
     }
+
+    public static class ArticleBuilder {
+        private String author;
+        private String title;
+        private String description;
+        private String url;
+        private String urlToImage;
+        private String publishedAt;
+        private String content;
+        private Source source;
+
+        public ArticleBuilder() {
+
+        }
+
+        public ArticleBuilder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public ArticleBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public ArticleBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ArticleBuilder url(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public ArticleBuilder urlToImage(String urlToImage) {
+            this.urlToImage = urlToImage;
+            return this;
+        }
+
+        public ArticleBuilder publishedAt(String publishedAt) {
+            this.publishedAt = publishedAt;
+            return this;
+        }
+
+        public ArticleBuilder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public ArticleBuilder source(Source source) {
+            this.source = source;
+            return this;
+        }
+
+        public Article build() {
+            return new Article(author, title, description, url, urlToImage, publishedAt, content, source);
+        }
+
+
+}
+
 
 }
