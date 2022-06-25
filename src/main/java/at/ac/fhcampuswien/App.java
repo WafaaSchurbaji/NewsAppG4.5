@@ -4,7 +4,7 @@ package at.ac.fhcampuswien;
 public class App {
     public static void main(String[] args) {
 
-        Menu menu = new Menu();
+        Menu menu =  Menu.getInstance();
         menu.start();
 
 

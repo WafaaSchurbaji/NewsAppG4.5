@@ -20,7 +20,7 @@ public class AppControllerTest {
 
     @BeforeEach
     void setup() {
-        appController = new AppController();
+        appController = AppController.getInstance();
 
     }
 
