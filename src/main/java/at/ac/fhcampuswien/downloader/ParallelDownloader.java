@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 // Class is needed for exercise 4 - ignore for exercise 3 solution
 public class ParallelDownloader extends Downloader{
 
@@ -16,7 +17,7 @@ public class ParallelDownloader extends Downloader{
 
     public ParallelDownloader() {
         this.executorService = Executors.newFixedThreadPool(10);
-    }
+    } // 10 download
 
     // returns number of downloaded article urls
     @Override
