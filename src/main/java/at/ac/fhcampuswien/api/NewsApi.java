@@ -18,9 +18,8 @@ public class NewsApi {
     private static final Gson gson = new Gson();
 
     public static NewsResponse getNews(UrlProperties urlProperties) throws NewsApiException {
-        String url = getUrl(urlProperties);
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
+        Request request = new ApiRequestBuilder().apiKey(API_KEY).baseUrl(BASE_URL).urlProperties(urlProperties).build();
         NewsResponse newsResponse = null;
         try (Response response = client.newCall(request).execute()) {
             String json = Objects.requireNonNull(response.body()).string();
@@ -31,49 +30,4 @@ public class NewsApi {
         return newsResponse;
     }
 
-    private static String getUrl(UrlProperties urlProperties) {
-        if (urlProperties == null) {
-            System.out.println("URL Properties object is null .. default values will be used");
-            urlProperties = new UrlProperties(Endpoint.EVERYTHING);
-            System.out.println(urlProperties);
-        }
-        StringBuilder stringBuilder = new StringBuilder(BASE_URL);
-        stringBuilder.append(urlProperties.getEndpoint().getValue())
-                .append("?")
-                .append(urlProperties.getQuery().getName())
-                .append("=")
-                .append(urlProperties.getQuery().getValue());
-        switch (urlProperties.getEndpoint()) {
-            case EVERYTHING -> {
-                stringBuilder
-                        .append("&")
-                        .append(urlProperties.getLanguage().getName())
-                        .append("=")
-                        .append(urlProperties.getLanguage().getValue());
-                stringBuilder
-                        .append("&")
-                        .append(urlProperties.getSortBy().getName())
-                        .append("=")
-                        .append(urlProperties.getSortBy().getValue());
-            }
-            case TOP_HEADLINES -> {
-                stringBuilder
-                        .append("&")
-                        .append(urlProperties.getCountry().getName())
-                        .append("=")
-                        .append(urlProperties.getCountry().getValue());
-                stringBuilder
-                        .append("&")
-                        .append(urlProperties.getCategory().getName())
-                        .append("=")
-                        .append(urlProperties.getCategory().getValue());
-            }
-        }
-        stringBuilder
-                .append("&")
-                .append(API_KEY.getName())
-                .append("=")
-                .append(API_KEY.getValue());
-        return stringBuilder.toString();
-    }
 }

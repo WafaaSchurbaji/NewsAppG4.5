@@ -14,20 +14,34 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AppController {
+    private static AppController INSTANCE;
     private List<Article> articles;
-    private List<Article> newsarticle;
 
-    public AppController() {
+
+    // Konstruktor privat erstellen - damit andere Klassen kein Objekt instanziieren können
+    private AppController() {
         NewsResponse article = new NewsResponse();
-        newsarticle = article.getArticles();
-        articles = newsarticle;
+        articles = article.getArticles();
+    }
+
+    /**
+     * Singleton Pattern
+     */
+
+    public static AppController getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new AppController();
+        }
+        return INSTANCE;
     }
 
     public NewsResponse getTopHeadLines(Category category, Country country) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.TOP_HEADLINES);
         urlProperties.setCountry(country);
         urlProperties.setCategory(category);
-        return NewsApi.getNews(urlProperties);
+        NewsResponse newsResponse = NewsApi.getNews(urlProperties);
+        setArticles(newsResponse.getArticles());
+        return newsResponse;
     }
 
     public NewsResponse getAllNewsBitcoin(Language language, SortBy sortBy) throws NewsApiException {
@@ -35,7 +49,10 @@ public class AppController {
         urlProperties.setQuery("+Bitcoin");
         urlProperties.setLanguage(language);
         urlProperties.setSortBy(sortBy);
-        return NewsApi.getNews(urlProperties);
+        NewsResponse newsResponse = NewsApi.getNews(urlProperties);
+        setArticles(newsResponse.getArticles());
+
+        return newsResponse;
     }
 
     public NewsResponse getNews(String topic, Language language, SortBy sortBy) throws NewsApiException {
@@ -43,7 +60,9 @@ public class AppController {
         urlProperties.setQuery(topic);
         urlProperties.setLanguage(language);
         urlProperties.setSortBy(sortBy);
-        return NewsApi.getNews(urlProperties);
+        NewsResponse newsResponse = NewsApi.getNews(urlProperties);
+        setArticles(newsResponse.getArticles());
+        return newsResponse;
     }
 
     public String getMostSource(Collection<Article> articles) throws NewsApiException {

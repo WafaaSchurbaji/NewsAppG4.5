@@ -73,9 +73,14 @@ public List<Article> getDescriptionByLength(Collection<Article> articles)  {
 
 
     public String getArticleWithShortTitle(Collection<Article> articles) throws NewsApiException {
-        Optional<Article> titleName =articles.stream()
+       /* Optional<Map.Entry<Article, Long>> titleName = articles.stream()
                 .filter(article -> article.getTitle().length() < 15)
-                .min(Comparator.comparingInt(Article::getTitleLength ));
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue());*/
+      Optional<Article> titleName =articles.stream()
+              .min(Comparator.comparingInt(Article::getTitleLength));
+                //.filter(article -> article.getTitle().length() < 15);
 
         if (titleName.isPresent())
             return titleName.get().getTitle();

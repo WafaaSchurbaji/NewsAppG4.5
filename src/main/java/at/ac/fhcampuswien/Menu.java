@@ -17,11 +17,23 @@ import java.util.stream.Collectors;
 
 
 public class Menu {
-    private final AppController controller = new AppController();
+    private static Menu INSTANCE;
+    private final AppController controller = AppController.getInstance();
 
     private static final String INVALID_USER_INPUT_MESSAGE = "\nInvalid Input\n";
     private static final String EXIT_MESSAGE = "Bye Bye";
     private Scanner scanner = new Scanner(System.in);
+
+    private Menu() {
+
+    }
+
+    public static Menu getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new Menu();
+        }
+        return INSTANCE;
+    }
 
     //getTopHeadlinesAustria
     //getAllNewsBitcoin
