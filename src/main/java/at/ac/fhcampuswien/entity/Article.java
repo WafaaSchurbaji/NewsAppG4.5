@@ -140,6 +140,14 @@ public class Article {
         return Objects.hash(getAuthor(), getTitle());
     }
 
+
+
+
+    public static ArticleBuilder builder() {
+        return new ArticleBuilder();
+    }
+
+
     public static class ArticleBuilder {
         private String author;
         private String title;

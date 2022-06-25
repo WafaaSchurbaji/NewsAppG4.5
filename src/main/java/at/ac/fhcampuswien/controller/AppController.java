@@ -35,6 +35,7 @@ public class AppController {
         return INSTANCE;
     }
 
+
     public NewsResponse getTopHeadLines(Category category, Country country) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.TOP_HEADLINES);
         urlProperties.setCountry(country);
@@ -153,7 +154,6 @@ public class AppController {
         }
         return result;
     }
-
     @Deprecated
     public static List<Article> generateMockList() {
         List<Article> mock = new ArrayList<>();
@@ -161,9 +161,9 @@ public class AppController {
         for (int i = 0; i < 50; i++) {
             mock.add(new Article(faker.name().fullName(), faker.book().title()));
         }
-        mock.add(new Article("Wafaa", "Bitcoin Future"));
-        mock.add(new Article("Max Mustermann", "The era of BitCoin"));
-        mock.add(new Article("Tester", "How to Bitcoin"));
+        mock.add(Article.builder().author("Wafaa").title("Bitcoin Future").build());
+        mock.add(Article.builder().author("Max Mustermann").title("The era of BitCoin").build());
+        mock.add(Article.builder().author("Tester").title("How to Bitcoin").build());
         return mock;
     }
 
