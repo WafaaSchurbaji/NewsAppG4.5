@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.downloader;
 
 import at.ac.fhcampuswien.exception.NewsApiException;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

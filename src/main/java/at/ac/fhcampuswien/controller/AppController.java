@@ -74,6 +74,7 @@ public class AppController {
         return newsResponse;
     }
 
+
     public String getMostSource(Collection<Article> articles) throws NewsApiException {
         Optional<Map.Entry<String, Long>> max = articles.stream()
                 .map(article -> article.getSource().getName())
