@@ -1,6 +1,10 @@
 package at.ac.fhcampuswien.exception;
 
 public class NewsApiException extends Exception {
+
+    public NewsApiException() {
+        super();
+    }
     public NewsApiException(String message) {
         super(message);
     }
