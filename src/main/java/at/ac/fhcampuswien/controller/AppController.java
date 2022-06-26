@@ -18,30 +18,19 @@ public class AppController {
     private static AppController INSTANCE;
     private List<Article> articles;
 
-
-    // Konstruktor privat erstellen - damit andere Klassen kein Objekt instanziieren können
     private AppController() {
         NewsResponse article = new NewsResponse();
         articles = article.getArticles();
     }
 
     /**
-     * Singleton Pattern
+     * singleton pattern
      */
-
     public static AppController getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AppController();
         }
         return INSTANCE;
-    }
-
-    public int downloadURLs(Downloader downloader) throws NewsApiException{
-        if(articles==null)
-            throw new NewsApiException("Articles is empty");
-
-        List<String> urls = articles.stream().map(Article::getUrl).toList();
-        return downloader.process(urls);
     }
 
     public NewsResponse getTopHeadLines(Category category, Country country) throws NewsApiException {
@@ -60,7 +49,6 @@ public class AppController {
         urlProperties.setSortBy(sortBy);
         NewsResponse newsResponse = NewsApi.getNews(urlProperties);
         setArticles(newsResponse.getArticles());
-
         return newsResponse;
     }
 
@@ -73,7 +61,6 @@ public class AppController {
         setArticles(newsResponse.getArticles());
         return newsResponse;
     }
-
 
     public String getMostSource(Collection<Article> articles) throws NewsApiException {
         Optional<Map.Entry<String, Long>> max = articles.stream()
@@ -89,19 +76,19 @@ public class AppController {
     }
 
     public String getAuthorWithLongestName(Collection<Article> articles)throws NewsApiException{
-     Optional<Article> authorName =articles.stream()
-             .max(Comparator.comparingInt(Article::getAuthorLength));
-     if (authorName.isPresent())
-     return authorName.get().getAuthor();
-     else
+        Optional<Article> authorName =articles.stream()
+                .max(Comparator.comparingInt(Article::getAuthorLength));
+        if (authorName.isPresent())
+            return authorName.get().getAuthor();
+        else
 
-             throw new NewsApiException("No author with longest name");
+            throw new NewsApiException("No author with longest name");
     }
 
     public long getArticleFromNewYorkTimes(Collection<Article> articles){
-          String a = "New York Times";
+        String a = "New York Times";
         return articles.stream()
-        .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
+                .map(article -> article.getSource().getName().equalsIgnoreCase(a)).count();
     }
 
     public List<Article> getDescriptionByLength(Collection<Article> articles) throws NewsApiException {
@@ -109,7 +96,7 @@ public class AppController {
         List<Article> sortedByDec = articles.stream()
                 .sorted(sortDescriptionByLengthThenAlphabet)
                 .collect(Collectors.toList());
-    if (sortedByDec.isEmpty()) {
+        if (sortedByDec.isEmpty()) {
             throw new NewsApiException("No Article contain description");
         }
         else {
@@ -129,13 +116,21 @@ public class AppController {
     }
 */
 
+    public int downloadURLs(Downloader downloader) throws NewsApiException{
+        if( articles == null)
+            throw new NewsApiException();
+
+        List<String> urls = articles.stream().map(Article::getUrl).toList();
+
+        return downloader.process(urls);
+    }
+
     public String getArticleWithShortTitle(Collection<Article> articles)throws NewsApiException{
         Optional<Article> title =articles.stream()
                 .min(Comparator.comparingInt(Article::getTitleLength));
         if (title.isPresent())
             return title.get().getTitle();
         else
-
             throw new NewsApiException("No author with shortest Title");
     }
     public void setArticles(List<Article> articles) {
@@ -163,6 +158,7 @@ public class AppController {
         }
         return result;
     }
+
     @Deprecated
     public static List<Article> generateMockList() {
         List<Article> mock = new ArrayList<>();

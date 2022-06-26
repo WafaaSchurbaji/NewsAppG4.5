@@ -2,6 +2,8 @@ package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.api.NewsResponse;
 import at.ac.fhcampuswien.controller.AppController;
+import at.ac.fhcampuswien.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.downloader.SequentialDownloader;
 import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.downloader.ParallelDownloader;
 import at.ac.fhcampuswien.downloader.SequentialDownloader;
@@ -31,7 +33,7 @@ public class Menu {
     }
 
     public static Menu getInstance() {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new Menu();
         }
         return INSTANCE;
@@ -53,10 +55,10 @@ public class Menu {
             getAllNewsBitcoin();
         } else if ("c".equals(input)) {
             getNewsByTopic();
-        }else if ("h".equals(input)){
-            downloadURLs();
         } else if ("q".equals(input)) {
             printExitMessage();
+        } else if ("h".equals(input)) {
+            downloadURLs();
         } else {
             printInvalidInputMessage();
         }
@@ -80,21 +82,6 @@ public class Menu {
         }
     }
 
-    private void downloadURLs(){
-        try {
-            long timeBefore = System.currentTimeMillis();
-            int resultSequential = controller.downloadURLs(new SequentialDownloader());
-            long timeAfter = System.currentTimeMillis();
-            System.out.println("Time for sequential download of " + resultSequential + "urls: " + (timeAfter - timeBefore) + "ms");
-
-            timeBefore = System.currentTimeMillis();
-            int resultParallel = controller.downloadURLs(new ParallelDownloader());
-            timeAfter = System.currentTimeMillis();
-            System.out.println("Time for parallel download of " + resultParallel + "urls: " + (timeAfter - timeBefore) + "ms");
-        } catch (NewsApiException e){
-            System.out.println(e.getMessage());
-        }
-    }
 
     private void printCategoryOptions() {
         System.out.println("\nChoose from the following categories");
@@ -217,6 +204,23 @@ public class Menu {
     private static void printExitMessage() {
         System.out.println(EXIT_MESSAGE);
         System.exit(0);
+    }
+
+    private void downloadURLs(){
+        try {
+            long timeBefore = System.currentTimeMillis();
+            int resultSequential = controller.downloadURLs(new SequentialDownloader());
+            long timeAfter = System.currentTimeMillis();
+            System.out.println("Time for sequential download of " + resultSequential + " urls: " + (timeAfter - timeBefore) + "ms");
+
+            timeBefore = System.currentTimeMillis();
+            int resultParallel = controller.downloadURLs(new ParallelDownloader());
+            timeAfter = System.currentTimeMillis();
+            System.out.println("Time for parellel download of " + resultParallel + " urls: " + (timeAfter - timeBefore) + "ms");
+
+        } catch (NewsApiException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void printInvalidInputMessage() {
