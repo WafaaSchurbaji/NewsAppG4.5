@@ -14,6 +14,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+
 public class AppController {
     private static AppController INSTANCE;
     private List<Article> articles;
