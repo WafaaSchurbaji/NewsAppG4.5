@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.downloader;
 
-import at.ac.fhcampuswien.controller.NewsAPIException;
+import at.ac.fhcampuswien.exception.NewsApiException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,15 +10,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+
 // Class is needed for exercise 4 - ignore for exercise 3 solution
 public abstract class Downloader {
 
     public static final String HTML_EXTENSION = ".html";
     public static final String DIRECTORY_DOWNLOAD = "./download/";
 
-    public abstract int process(List<String> urls) throws NewsAPIException;
+    public abstract int process(List<String> urls) throws NewsApiException;
 
-    public String saveUrl2File(String urlString) throws NewsAPIException {
+    public String saveUrl2File(String urlString) throws NewsApiException {
         InputStream is = null;
         OutputStream os = null;
         String fileName;
@@ -39,9 +40,9 @@ public abstract class Downloader {
                 os.write(b, 0, length);
             }
         } catch (MalformedURLException e){
-            throw new NewsAPIException("Cannot convert " + urlString + " to URL. Error message: " + e.getMessage());
+            throw new NewsApiException("Cannot convert " + urlString + " to URL. Error message: " + e.getMessage());
         } catch (IOException e) {
-            throw new NewsAPIException("Either failed to open URL: " + urlString + " or failed to write to Folder. Error message: " + e.getMessage());
+            throw new NewsApiException("Either failed to open URL: " + urlString + " or failed to write to Folder. Error message: " + e.getMessage());
         } finally {
             try {
                 if(is != null)

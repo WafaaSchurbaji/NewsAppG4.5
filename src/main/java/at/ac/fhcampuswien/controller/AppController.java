@@ -37,9 +37,9 @@ public class AppController {
     }
 
     public int downloadURLs(Downloader downloader) throws NewsApiException{
-        if(articles==null){
-            throw new NewsApiException();
-        }
+        if(articles==null)
+            throw new NewsApiException("Articles is empty");
+
         List<String> urls = articles.stream().map(Article::getUrl).toList();
         return downloader.process(urls);
     }
