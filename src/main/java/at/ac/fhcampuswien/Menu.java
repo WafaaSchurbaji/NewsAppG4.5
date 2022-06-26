@@ -51,6 +51,8 @@ public class Menu {
             getAllNewsBitcoin();
         } else if ("c".equals(input)) {
             getNewsByTopic();
+        }else if ("h".equals(input)){
+            downloadURLs();
         } else if ("q".equals(input)) {
             printExitMessage();
         } else {
@@ -76,6 +78,21 @@ public class Menu {
         }
     }
 
+    private void downloadURLs(){
+        try {
+            long timeBefore = System.currentTimeMillis();
+            int resultSequential = controller.downloadURLs(new SequentialDownloader());
+            long timeAfter = System.currentTimeMillis();
+            System.out.println("Time for sequential download of " + resultSequential + "urls: " + (timeAfter - timeBefore) + "ms");
+
+            timeBefore = System.currentTimeMillis();
+            int resultParallel = controller.downloadURLs(new ParallelDownloader());
+            timeAfter = System.currentTimeMillis();
+            System.out.println("Time for parallel download of " + resultParallel + "urls: " + (timeAfter - timeBefore) + "ms");
+        } catch (NewsApiException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
     private void printCategoryOptions() {
         System.out.println("\nChoose from the following categories");
@@ -213,6 +230,7 @@ public class Menu {
                 a: Get top headlines by country\s
                 b: Get all news about bitcoin
                 c: Get news by topic\s
+                h: Download urls
                 q: Quit program""");
     }
 }

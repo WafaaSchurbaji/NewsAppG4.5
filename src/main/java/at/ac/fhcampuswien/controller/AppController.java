@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.controller;
 import at.ac.fhcampuswien.api.NewsApi;
 import at.ac.fhcampuswien.api.NewsResponse;
 import at.ac.fhcampuswien.api.UrlProperties;
+import at.ac.fhcampuswien.downloader.Downloader;
 import at.ac.fhcampuswien.entity.Article;
 import at.ac.fhcampuswien.exception.NewsApiException;
 import at.ac.fhcampuswien.properties.*;
@@ -35,6 +36,13 @@ public class AppController {
         return INSTANCE;
     }
 
+    public int downloadURLs(Downloader downloader) throws NewsApiException{
+        if(articles==null){
+            throw new NewsApiException();
+        }
+        List<String> urls = articles.stream().map(Article::getUrl).toList();
+        return downloader.process(urls);
+    }
 
     public NewsResponse getTopHeadLines(Category category, Country country) throws NewsApiException {
         UrlProperties urlProperties = new UrlProperties(Endpoint.TOP_HEADLINES);
